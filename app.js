@@ -182,6 +182,9 @@ document.addEventListener("click", async (event) => {
   }
 });
 
+$("#openDiscordJoin")?.addEventListener("click", openDiscordTray);
+$("#closeDiscordTray")?.addEventListener("click", closeDiscordTray);
+
 loadConfig()
   .then(renderAll)
   .catch((error) => {
