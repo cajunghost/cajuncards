@@ -16,9 +16,6 @@
       </a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="#memberships">Memberships</a>
-        <a href="#clubhouse">Clubhouse</a>
-        <a href="#calendar">Calendar</a>
-        <a href="#faq">FAQ</a>
       </nav>
       <a class="button compact" href="#memberships">Join</a>
     </header>
@@ -31,7 +28,7 @@
           <p data-config="hero.copy">A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.</p>
           <div class="hero-actions">
             <a class="button primary" href="#memberships" data-config="hero.primaryCta">Compare memberships</a>
-            <a class="button secondary" href="#calendar" data-config="hero.secondaryCta">View calendar</a>
+            <a class="button secondary" href="#dropNotification" data-config="hero.secondaryCta">Discord drops</a>
           </div>
         </div>
         <div class="hero-mark">
@@ -42,6 +39,8 @@
       <section class="announcement-strip" aria-label="Announcements">
         <div id="announcementTrack"></div>
       </section>
+
+      <section class="drop-notification hidden" id="dropNotification" aria-live="polite"></section>
 
       <section class="toolbar section-lite" aria-label="Membership tools">
         <div>
@@ -74,63 +73,6 @@
           <p>Each tier redirects to your Square checkout link. No payment data is collected on this GitHub Pages site.</p>
         </div>
         <div class="subscription-grid" id="subscriptionGrid" aria-live="polite"></div>
-      </section>
-
-      <section class="section clubhouse" id="clubhouse">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Clubhouse</p>
-            <h2>What members expect from a modern TCG shop</h2>
-          </div>
-          <p>Clear drops, easy comparison, collector planning, break reminders, and checkout paths that do not fight the customer.</p>
-        </div>
-        <div class="feature-grid" id="featureGrid"></div>
-      </section>
-
-      <section class="section planner">
-        <div>
-          <p class="eyebrow">Wishlist Planner</p>
-          <h2>Plan the next chase</h2>
-          <p>Use this lightweight planner during conversations, trade nights, or livestreams. It stays in your browser.</p>
-        </div>
-        <form class="planner-card" id="wishlistForm">
-          <label>Card, sealed box, or set<input name="target" placeholder="One Piece OP-05 sealed box"></label>
-          <label>Notes<input name="notes" placeholder="Budget, grade, player, color, or condition"></label>
-          <button class="button primary" type="submit">Add target</button>
-          <div id="wishlistItems" class="wishlist-items"></div>
-        </form>
-      </section>
-
-      <section class="section calendar-section" id="calendar">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Calendar</p>
-            <h2>Drops, breaks, and trade nights</h2>
-          </div>
-          <p>A public-facing schedule that feels familiar to TCG shoppers without turning the site into a crowded storefront.</p>
-        </div>
-        <div class="calendar-list" id="calendarList"></div>
-      </section>
-
-      <section class="section compare-section">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Compare</p>
-            <h2>Tier comparison</h2>
-          </div>
-          <p>Quick scanning for collectors who already know what they want.</p>
-        </div>
-        <div class="compare-table" id="compareTable"></div>
-      </section>
-
-      <section class="section faq-section" id="faq">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">FAQ</p>
-            <h2>Plain answers before checkout</h2>
-          </div>
-        </div>
-        <div class="faq-list" id="faqList"></div>
       </section>
 
     </main>
