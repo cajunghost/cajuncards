@@ -36,12 +36,20 @@ async function sha256(value) {
 
 async function loadConfig() {
   const localOverride = localStorage.getItem("cajunSitePreviewConfig");
-  if (localOverride) {
-    config = JSON.parse(localOverride);
-    return;
-  }
   const response = await fetch("config/site.json", { cache: "no-store" });
   config = response.ok ? await response.json() : fallbackConfig;
+  if (localOverride) {
+    try {
+      const preview = JSON.parse(localOverride);
+      if (Array.isArray(preview.subscriptions) && preview.subscriptions.length) {
+        config = preview;
+      } else {
+        localStorage.removeItem("cajunSitePreviewConfig");
+      }
+    } catch {
+      localStorage.removeItem("cajunSitePreviewConfig");
+    }
+  }
 }
 
 function isUnlocked() {
@@ -138,7 +146,7 @@ async function publishConfig() {
     })
   });
   localStorage.removeItem("cajunSitePreviewConfig");
-  $("#adminMessage").textContent = "Published. GitHub Pages may take a minute to show the new links.";
+  $("#adminMessage").textContent = "Published. GitHub Pages may take a minute to show the updated config.";
 }
 
 $("#adminLoginForm").addEventListener("submit", async (event) => {
