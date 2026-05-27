@@ -1,3 +1,40 @@
+const fallbackSubscriptions = [
+  {
+    id: "bayou-starter",
+    name: "Bayou Starter",
+    price: "$9",
+    cadence: "monthly",
+    tag: "New Collector",
+    squareUrl: "",
+    summary: "For collectors who want the drop radar, event calendar, and member-only alerts without overcommitting.",
+    features: ["Early alerts for sealed product and singles", "Monthly TCG market email", "Trade-night calendar access", "Members-only Discord invite"],
+    bestFor: "Casual collectors, parents, and new TCG players"
+  },
+  {
+    id: "lagniappe-club",
+    name: "Lagniappe Club",
+    price: "$29",
+    cadence: "monthly",
+    tag: "Most Popular",
+    popular: true,
+    squareUrl: "",
+    summary: "The core collector membership with useful monthly value, break priority, and members-only opportunities.",
+    features: ["Everything in Bayou Starter", "Priority access to live break signups", "Monthly member discount code", "Members-only singles previews"],
+    bestFor: "Active TCG collectors who follow drops and breaks"
+  },
+  {
+    id: "fleur-de-lis-elite",
+    name: "Fleur-de-Lis Elite",
+    price: "$79",
+    cadence: "monthly",
+    tag: "Premium",
+    squareUrl: "",
+    summary: "A premium collector service for curated finds, VIP access, and a higher-touch monthly experience.",
+    features: ["Everything in Lagniappe Club", "Quarterly curated collector box", "VIP event and trade-night access", "Personal sourcing request queue"],
+    bestFor: "Serious collectors building a sharper collection"
+  }
+];
+
 const fallbackConfig = {
   brand: "Cajun Cards & Collectibles",
   hero: {
@@ -8,14 +45,7 @@ const fallbackConfig = {
     secondaryCta: "Discord drops"
   },
   announcements: [],
-  discordDrop: {
-    enabled: false,
-    title: "",
-    message: "",
-    discordUrl: "",
-    postedAt: ""
-  },
-  subscriptions: []
+  subscriptions: fallbackSubscriptions
 };
 
 let config = fallbackConfig;
@@ -50,53 +80,8 @@ function applyTextConfig() {
   });
 }
 
-function renderAnnouncements() {
-  const announcements = config.announcements?.length ? config.announcements : ["Subscriptions redirect to Square checkout."];
-  const items = [...announcements, ...announcements].map((text) => `
-    <div class="announcement-item"><span>CCC</span> ${escapeHtml(text)}</div>
-  `);
-  $("#announcementTrack").innerHTML = items.join("");
-}
-
-function renderDiscordDrop() {
-  const drop = config.discordDrop || {};
-  const section = $("#dropNotification");
-  section.classList.toggle("hidden", !drop.enabled);
-  if (!drop.enabled) {
-    section.innerHTML = "";
-    return;
-  }
-  section.innerHTML = `
-    <div>
-      <p class="eyebrow">Discord Drop</p>
-      <h2>${escapeHtml(drop.title || "Discord drop notification")}</h2>
-      <p>${escapeHtml(drop.message || "")}</p>
-      ${drop.postedAt ? `<span>${escapeHtml(drop.postedAt)}</span>` : ""}
-    </div>
-    ${drop.discordUrl ? `<a class="button primary" href="${escapeHtml(drop.discordUrl)}" target="_blank" rel="noopener">Open Discord drop</a>` : ""}
-  `;
-}
-
-function tierMatches(tier) {
-  const query = $("#tierSearch").value.trim().toLowerCase();
-  const filter = $("#tierFilter").value;
-  const haystack = [
-    tier.name,
-    tier.summary,
-    tier.bestFor,
-    tier.tag,
-    ...(tier.features || [])
-  ].join(" ").toLowerCase();
-  const passesSearch = !query || haystack.includes(query);
-  const passesFilter = filter === "all"
-    || (filter === "starter" && haystack.includes("new"))
-    || (filter === "break" && haystack.includes("break"))
-    || (filter === "premium" && (haystack.includes("premium") || haystack.includes("vip")));
-  return passesSearch && passesFilter;
-}
-
 function renderSubscriptions() {
-  const tiers = (config.subscriptions || []).filter(tierMatches);
+  const tiers = (config.subscriptions?.length ? config.subscriptions : fallbackSubscriptions);
   $("#subscriptionGrid").innerHTML = tiers.map((tier) => `
     <article class="subscription-card ${tier.popular ? "popular" : ""}">
       <div class="tier-head">
@@ -119,8 +104,6 @@ function renderSubscriptions() {
 
 function renderAll() {
   applyTextConfig();
-  renderAnnouncements();
-  renderDiscordDrop();
   renderSubscriptions();
 }
 
@@ -178,9 +161,6 @@ document.addEventListener("click", async (event) => {
     showToast("Square link copied.");
   }
 });
-
-$("#tierSearch").addEventListener("input", renderSubscriptions);
-$("#tierFilter").addEventListener("change", renderSubscriptions);
 
 loadConfig()
   .then(renderAll)
