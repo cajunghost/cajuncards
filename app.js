@@ -2,36 +2,36 @@ const fallbackSubscriptions = [
   {
     id: "bayou-starter",
     name: "Bayou Starter",
-    price: "$9",
-    cadence: "monthly",
+    price: "$200",
+    cadence: "yearly",
     tag: "New Collector",
     squareUrl: "",
-    summary: "For collectors who want the drop radar, event calendar, and member-only alerts without overcommitting.",
-    features: ["Early alerts for sealed product and singles", "Monthly TCG market email", "Trade-night calendar access", "Members-only Discord invite"],
-    bestFor: "Casual collectors, parents, and new TCG players"
+    summary: "Entry access for online collectors who want Cajun Cards Discord alerts, digital drop visibility, and a cleaner path to sealed product opportunities.",
+    features: ["Members-only Discord access", "Online sealed product drop alerts", "Monthly digital TCG market notes", "Standard access to subscription-only announcements"],
+    bestFor: "Online collectors who want reliable drop awareness and Discord access"
   },
   {
     id: "lagniappe-club",
     name: "Lagniappe Club",
-    price: "$29",
-    cadence: "monthly",
+    price: "$400",
+    cadence: "yearly",
     tag: "Most Popular",
     popular: true,
     squareUrl: "",
-    summary: "The core collector membership with useful monthly value, break priority, and members-only opportunities.",
-    features: ["Everything in Bayou Starter", "Priority access to live break signups", "Monthly member discount code", "Members-only singles previews"],
-    bestFor: "Active TCG collectors who follow drops and breaks"
+    summary: "Priority online membership with earlier Discord notifications, better sealed-product access windows, and stronger visibility into limited digital drops.",
+    features: ["Everything in Bayou Starter", "Priority Discord drop notifications", "Early online access windows for sealed product", "Member-only digital claim opportunities", "Online collector request priority"],
+    bestFor: "Active online TCG collectors who want earlier access and better drop positioning"
   },
   {
     id: "fleur-de-lis-elite",
     name: "Fleur-de-Lis Elite",
-    price: "$79",
-    cadence: "monthly",
+    price: "$600",
+    cadence: "yearly",
     tag: "Premium",
     squareUrl: "",
-    summary: "A premium collector service for curated finds, VIP access, and a higher-touch monthly experience.",
-    features: ["Everything in Lagniappe Club", "Quarterly curated collector box", "VIP event and trade-night access", "Personal sourcing request queue"],
-    bestFor: "Serious collectors building a sharper collection"
+    summary: "The highest-access online tier for collectors who want first-look sealed opportunities, elite Discord alerts, and premium digital sourcing priority.",
+    features: ["Everything in Lagniappe Club", "First-look Discord alerts before other tiers", "Top priority for limited sealed product opportunities", "Elite-only online drop notifications", "Highest priority digital sourcing requests", "Premium access to rare sealed availability updates"],
+    bestFor: "Serious online collectors who want the highest level of access and exclusivity"
   }
 ];
 
@@ -40,7 +40,7 @@ const fallbackConfig = {
   hero: {
     eyebrow: "Collector memberships with Cajun character",
     headline: "Cajun Cards & Collectibles",
-    copy: "A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.",
+    copy: "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every year.",
     primaryCta: "Compare memberships",
     secondaryCta: "Discord drops"
   },
