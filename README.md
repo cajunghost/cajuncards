@@ -48,7 +48,7 @@ Default helper login:
 
 The helper lets you paste/edit Square links or JSON, preview it locally in the browser, and export a replacement `site.json`. Because GitHub Pages is static, saving permanent site-wide changes still requires committing the updated `config/site.json`.
 
-The admin helper also has a Discord Drop Notification form. Paste the Discord announcement text and message/channel link there, preview it, then export and commit `site.json` to publish the notice.
+The admin helper also has Discord fields. Add the public Discord server invite for the header Join popup, and optionally paste a Discord drop announcement/message link for public notices.
 
 For Square links and Discord drop notices, the admin helper can also publish directly to GitHub from the browser. Paste a GitHub token with Contents read/write for `cajunghost/cajuncards`, update the form fields, then click `Publish config permanently`.
 
