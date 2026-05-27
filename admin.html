@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cajun Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Back to Cajun Cards & Collectibles">
+        <img src="assets/logo.svg" alt="">
+        <span>Cajun Admin</span>
+      </a>
+      <nav class="site-nav" aria-label="Admin navigation">
+        <a href="index.html">Public site</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section admin-login-section" id="adminLoginSection">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Private Helper</p>
+            <h1>Admin Login</h1>
+          </div>
+          <p>This page is intentionally unlinked from the public site. Login unlocks the Square-link configuration helper in this browser.</p>
+        </div>
+        <form class="admin-card admin-login-card" id="adminLoginForm">
+          <label>Username<input name="username" autocomplete="username" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="button primary" type="submit">Unlock admin tools</button>
+          <p class="form-note" id="loginMessage" role="status"></p>
+        </form>
+      </section>
+
+      <section class="section admin-section hidden" id="adminPanel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Admin Helper</p>
+            <h2>Square links and site configuration</h2>
+          </div>
+          <p>Preview changes locally, download `site.json`, then commit it to your GitHub Pages repository.</p>
+        </div>
+        <div class="admin-grid">
+          <form class="admin-card" id="linkForm">
+            <h3>Square Links</h3>
+            <div id="squareLinkFields"></div>
+            <button class="button primary" type="submit">Preview links</button>
+          </form>
+          <form class="admin-card" id="jsonForm">
+            <h3>Full Config JSON</h3>
+            <label>site.json<textarea id="jsonEditor" rows="18" spellcheck="false"></textarea></label>
+            <div class="button-row">
+              <button class="button primary" type="submit">Preview JSON</button>
+              <button class="button secondary" id="downloadConfig" type="button">Download site.json</button>
+              <button class="button ghost" id="adminLogout" type="button">Lock admin</button>
+            </div>
+            <p class="form-note" id="adminMessage" role="status"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="admin.js" type="module"></script>
+  </body>
+</html>
