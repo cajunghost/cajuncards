@@ -43,8 +43,8 @@ Open `/admin.html` directly. It is not linked from the public site.
 
 Default helper login:
 
-- Username: `admin`
-- Password: `ChangeMe123!`
+- Username: `CajunGamers`
+- Password: `CajunGamers!2026#BayouVault`
 
 The helper lets you paste/edit Square links or JSON, preview it locally in the browser, and export a replacement `site.json`. Because GitHub Pages is static, saving permanent site-wide changes still requires committing the updated `config/site.json`.
 
