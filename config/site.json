@@ -17,6 +17,13 @@
     "No on-site payments are collected on this GitHub Pages build.",
     "Subscriptions redirect to secure Square checkout."
   ],
+  "discordDrop": {
+    "enabled": true,
+    "title": "Discord drop notifications",
+    "message": "Join the Cajun Cards Discord for the next live drop alert.",
+    "discordUrl": "",
+    "postedAt": ""
+  },
   "subscriptions": [
     {
       "id": "bayou-starter",
@@ -68,55 +75,6 @@
         "First look at rare sealed opportunities"
       ],
       "bestFor": "Serious collectors building a sharper collection"
-    }
-  ],
-  "shopLikeFeatures": [
-    {
-      "title": "Drop Calendar",
-      "copy": "A clean schedule for upcoming releases, member windows, live breaks, and trade nights."
-    },
-    {
-      "title": "Collector Wishlist",
-      "copy": "Members can use the wishlist planner to organize chase cards, sealed targets, and grading candidates."
-    },
-    {
-      "title": "Break Priority",
-      "copy": "Subscription tiers can receive priority reminders before public live break signups open."
-    },
-    {
-      "title": "Secure Checkout Redirects",
-      "copy": "Every subscription call-to-action sends traffic to your Square checkout link instead of collecting payment here."
-    }
-  ],
-  "calendar": [
-    {
-      "date": "June 7",
-      "type": "Trade Night",
-      "title": "Community trade table and collection review"
-    },
-    {
-      "date": "June 14",
-      "type": "Break Window",
-      "title": "Members receive first notice for the next live break"
-    },
-    {
-      "date": "June 21",
-      "type": "Drop Alert",
-      "title": "Sealed product and singles preview email"
-    }
-  ],
-  "faq": [
-    {
-      "question": "Where do subscription payments happen?",
-      "answer": "All subscription buttons redirect to Square checkout links that you control."
-    },
-    {
-      "question": "Can I change the Square links later?",
-      "answer": "Yes. Update config/site.json and redeploy, or use the Admin helper to preview changes and export replacement JSON."
-    },
-    {
-      "question": "Does this GitHub Pages site store customer payment data?",
-      "answer": "No. This static webapp redirects to Square and does not process or store card data."
     }
   ]
 }
