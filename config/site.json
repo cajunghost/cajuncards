@@ -1,30 +1,37 @@
 {
   "brand": "Cajun Cards & Collectibles",
+  "meta": {
+    "description": "Subscription memberships for Cajun Cards & Collectibles — a TCG collector club in Louisiana. Three tiers: Bayou Starter, Lagniappe Club, and Fleur-de-Lis Elite."
+  },
+  "footer": {
+    "tagline": "A TCG collector club with Cajun character.",
+    "copyright": "2026 Cajun Cards & Collectibles. All rights reserved."
+  },
   "squareLocationUrl": "https://squareup.com/us/en",
   "hero": {
     "eyebrow": "Collector memberships with Cajun character",
     "headline": "Cajun Cards & Collectibles",
-    "copy": "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every membership tier.",
-    "primaryCta": "Compare memberships",
-    "secondaryCta": "View calendar"
+    "copy": "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every year.",
+    "primaryCta": "Explore memberships",
+    "secondaryCta": "Join Discord"
   },
   "admin": {
     "username": "CajunGamers",
     "passwordHash": "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
   },
   "announcements": [
-    "Square checkout links can be updated any time in config/site.json.",
-    "No on-site payments are collected on this GitHub Pages build.",
-    "Subscriptions redirect to secure Square checkout."
+    "Payments powered by Square",
+    "Products coming soon",
+    "Subscribe today to gain access to our exclusive launch day - coming soon!"
   ],
   "discordDrop": {
-    "enabled": true,
+    "enabled": false,
     "title": "Discord drop notifications",
     "message": "Join the Cajun Cards Discord for the next live drop alert.",
     "discordUrl": "",
     "postedAt": ""
   },
-  "discordServerUrl": "https://discord.gg/NWCSwQJehF",
+  "discordServerUrl": "",
   "subscriptions": [
     {
       "id": "bayou-starter",
@@ -32,7 +39,7 @@
       "price": "$200",
       "cadence": "yearly",
       "tag": "New Collector",
-      "squareUrl": "https://square.link/u/S1FLTuJI",
+      "squareUrl": "",
       "summary": "Entry access for online collectors who want Cajun Cards Discord alerts, digital drop visibility, and a cleaner path to sealed product opportunities.",
       "features": [
         "Members-only Discord access",
@@ -49,7 +56,7 @@
       "cadence": "yearly",
       "tag": "Most Popular",
       "popular": true,
-      "squareUrl": "https://square.link/u/LNMcm3T4",
+      "squareUrl": "",
       "summary": "Priority online membership with earlier Discord notifications, better sealed-product access windows, and stronger visibility into limited digital drops.",
       "features": [
         "Everything in Bayou Starter",
@@ -66,7 +73,7 @@
       "price": "$600",
       "cadence": "yearly",
       "tag": "Premium",
-      "squareUrl": "https://square.link/u/iZ9abeck",
+      "squareUrl": "",
       "summary": "The highest-access online tier for collectors who want first-look sealed opportunities, elite Discord alerts, and premium digital sourcing priority.",
       "features": [
         "Everything in Lagniappe Club",
