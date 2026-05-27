@@ -67,7 +67,7 @@ function getPath(path) {
 }
 
 async function loadConfig() {
-  const response = await fetch("config/site.json", { cache: "no-store" });
+  const response = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
   config = response.ok ? await response.json() : fallbackConfig;
 }
 
