@@ -238,6 +238,35 @@ h3 {
   background: var(--charcoal);
 }
 
+.drop-notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: clamp(24px, 4vw, 42px) clamp(18px, 5vw, 76px) 0;
+  padding: 18px;
+  border: 1px solid rgba(201, 10, 10, 0.25);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.drop-notification h2 {
+  margin-bottom: 8px;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+}
+
+.drop-notification p {
+  margin-bottom: 6px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.drop-notification span {
+  color: var(--red);
+  font-weight: 900;
+}
+
 #announcementTrack {
   display: flex;
   min-width: max-content;
@@ -589,6 +618,7 @@ textarea:focus {
   .hero,
   .toolbar,
   .section-heading,
+  .drop-notification,
   .planner,
   .admin-grid {
     display: grid;
