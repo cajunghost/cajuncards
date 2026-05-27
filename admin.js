@@ -49,7 +49,7 @@ function setStatus(message, type = "info") {
   el.textContent = message;
   el.className = `admin-status ${type}`;
   el.classList.remove("hidden");
-  if (type === "success") window.setTimeout(() => el.classList.add("hidden"), 6000);
+  if (type === "success") window.setTimeout(() => el.classList.add("hidden"), 8000);
 }
 
 function showToast(message) {
@@ -100,7 +100,8 @@ function getToken() {
 /* ─── Config loading ───────────────────────── */
 async function loadConfig() {
   const localOverride = localStorage.getItem("cajunSitePreviewConfig");
-  const response = await fetch("config/site.json", { cache: "no-store" });
+  // ?t= cache-busts the GitHub Pages CDN so the admin always sees the live config
+  const response = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
   config = response.ok ? await response.json() : { ...fallbackConfig };
   if (localOverride) {
     try {
@@ -282,6 +283,11 @@ async function githubRequest(path, options = {}) {
 
 async function doPublish(label = "config") {
   setStatus(`Publishing ${label} to GitHub…`, "info");
+
+  // Embed a sentinel timestamp so we can detect when Pages has deployed
+  config._publishedAt = new Date().toISOString();
+  const publishTimestamp = config._publishedAt;
+
   const filePath = "config/site.json";
   const current  = await githubRequest(`/contents/${filePath}?ref=${githubBranch}`);
   await githubRequest(`/contents/${filePath}`, {
@@ -294,7 +300,26 @@ async function doPublish(label = "config") {
     })
   });
   localStorage.removeItem("cajunSitePreviewConfig");
-  setStatus(`Published. GitHub Pages may take a minute to reflect changes.`, "success");
+
+  setStatus("Published to GitHub. Waiting for the site to update…", "info");
+
+  // Poll the live URL (cache-busted) every 5s until the new config is confirmed deployed
+  for (let attempt = 1; attempt <= 24; attempt++) {
+    await new Promise((r) => setTimeout(r, 5000));
+    try {
+      const res  = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
+      const live = res.ok ? await res.json() : null;
+      if (live?._publishedAt === publishTimestamp) {
+        setStatus("Your changes are live on the website!", "success");
+        renderAdmin();
+        return;
+      }
+    } catch { /* network hiccup — keep polling */ }
+    setStatus(`Waiting for deployment… (${attempt * 5}s)`, "info");
+  }
+
+  // Timed out, but the commit was accepted
+  setStatus("Published. The site should reflect your changes within a couple of minutes.", "info");
   renderAdmin();
 }
 

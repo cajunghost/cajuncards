@@ -67,7 +67,8 @@ function getPath(path) {
 }
 
 async function loadConfig() {
-  const response = await fetch("config/site.json", { cache: "no-store" });
+  // ?t= cache-busts the GitHub Pages CDN so changes appear immediately after publish
+  const response = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
   config = response.ok ? await response.json() : fallbackConfig;
 }
 
