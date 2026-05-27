@@ -49,6 +49,12 @@
             <h3>Square Links</h3>
             <div id="squareLinkFields"></div>
             <button class="button primary" type="submit">Preview links</button>
+            <div class="publish-box">
+              <h3>Publish Without GitHub</h3>
+              <p class="form-note">Paste a GitHub token with Contents read/write for `cajunghost/cajuncards`. It stays in this browser session and is used only to update `config/site.json`.</p>
+              <label>GitHub publish token<input id="githubPublishToken" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+              <button class="button secondary" id="publishConfig" type="button">Publish Square links permanently</button>
+            </div>
           </form>
           <form class="admin-card" id="dropForm">
             <h3>Discord Drop Notification</h3>
