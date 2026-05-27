@@ -26,7 +26,7 @@
             <p class="eyebrow">Private Helper</p>
             <h1>Admin Login</h1>
           </div>
-          <p>This page is intentionally unlinked from the public site. Login unlocks the Square-link configuration helper in this browser.</p>
+          <p>This page is intentionally unlinked from the public site. Login unlocks the private configuration editor in this browser.</p>
         </div>
         <form class="admin-card admin-login-card" id="adminLoginForm">
           <label>Username<input name="username" autocomplete="username" required></label>
@@ -42,9 +42,21 @@
             <p class="eyebrow">Admin Helper</p>
             <h2>Square links and site configuration</h2>
           </div>
-          <p>Preview changes locally, download `site.json`, then commit it to your GitHub Pages repository.</p>
+          <p>Preview changes locally, then publish them directly to your GitHub Pages repository with a GitHub token.</p>
         </div>
         <div class="admin-grid">
+          <form class="admin-card" id="siteForm">
+            <h3>Public Website Editor</h3>
+            <label>Brand name<input name="brand" placeholder="Cajun Cards & Collectibles"></label>
+            <label>Hero eyebrow<input name="heroEyebrow" placeholder="Collector memberships with Cajun character"></label>
+            <label>Hero headline<input name="heroHeadline" placeholder="Cajun Cards & Collectibles"></label>
+            <label>Hero copy<textarea name="heroCopy" rows="4" placeholder="Rewrite the public intro copy."></textarea></label>
+            <label>Primary CTA text<input name="primaryCta" placeholder="Compare memberships"></label>
+            <label>Secondary CTA text<input name="secondaryCta" placeholder="Discord drops"></label>
+            <label>Subscription tiers JSON<textarea name="subscriptionsJson" rows="18" spellcheck="false"></textarea></label>
+            <button class="button primary" type="submit">Preview website edits</button>
+            <p class="form-note">Rewrite the tiers freely here. Keep each tier id unique so Square links stay mapped correctly.</p>
+          </form>
           <form class="admin-card" id="linkForm">
             <h3>Square Links</h3>
             <div id="squareLinkFields"></div>
