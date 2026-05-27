@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cajun Cards & Collectibles</title>
+    <meta name="description" content="Subscription memberships for Cajun Cards & Collectibles, a TCG collector club with Square checkout redirects.">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Cajun Cards & Collectibles home">
+        <img src="assets/logo.svg" alt="">
+        <span>Cajun Cards & Collectibles</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#memberships">Memberships</a>
+        <a href="#clubhouse">Clubhouse</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="button compact" href="#memberships">Join</a>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow" data-config="hero.eyebrow">Collector memberships with Cajun character</p>
+          <h1 data-config="hero.headline">Cajun Cards & Collectibles</h1>
+          <p data-config="hero.copy">A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#memberships" data-config="hero.primaryCta">Compare memberships</a>
+            <a class="button secondary" href="#calendar" data-config="hero.secondaryCta">View calendar</a>
+          </div>
+        </div>
+        <div class="hero-mark">
+          <img src="assets/logo.svg" alt="Cajun Cards & Collectibles logo">
+        </div>
+      </section>
+
+      <section class="announcement-strip" aria-label="Announcements">
+        <div id="announcementTrack"></div>
+      </section>
+
+      <section class="toolbar section-lite" aria-label="Membership tools">
+        <div>
+          <p class="eyebrow">Subscription Shop</p>
+          <h2>Pick your collector lane</h2>
+        </div>
+        <div class="tools">
+          <label>
+            Search tiers
+            <input id="tierSearch" type="search" placeholder="breaks, wishlist, VIP">
+          </label>
+          <label>
+            Collector focus
+            <select id="tierFilter">
+              <option value="all">All memberships</option>
+              <option value="starter">New collector</option>
+              <option value="break">Break access</option>
+              <option value="premium">Premium service</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="section" id="memberships">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Memberships</p>
+            <h2>TCG-shop utility, Cajun personality</h2>
+          </div>
+          <p>Each tier redirects to your Square checkout link. No payment data is collected on this GitHub Pages site.</p>
+        </div>
+        <div class="subscription-grid" id="subscriptionGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="section clubhouse" id="clubhouse">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Clubhouse</p>
+            <h2>What members expect from a modern TCG shop</h2>
+          </div>
+          <p>Clear drops, easy comparison, collector planning, break reminders, and checkout paths that do not fight the customer.</p>
+        </div>
+        <div class="feature-grid" id="featureGrid"></div>
+      </section>
+
+      <section class="section planner">
+        <div>
+          <p class="eyebrow">Wishlist Planner</p>
+          <h2>Plan the next chase</h2>
+          <p>Use this lightweight planner during conversations, trade nights, or livestreams. It stays in your browser.</p>
+        </div>
+        <form class="planner-card" id="wishlistForm">
+          <label>Card, sealed box, or set<input name="target" placeholder="One Piece OP-05 sealed box"></label>
+          <label>Notes<input name="notes" placeholder="Budget, grade, player, color, or condition"></label>
+          <button class="button primary" type="submit">Add target</button>
+          <div id="wishlistItems" class="wishlist-items"></div>
+        </form>
+      </section>
+
+      <section class="section calendar-section" id="calendar">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Calendar</p>
+            <h2>Drops, breaks, and trade nights</h2>
+          </div>
+          <p>A public-facing schedule that feels familiar to TCG shoppers without turning the site into a crowded storefront.</p>
+        </div>
+        <div class="calendar-list" id="calendarList"></div>
+      </section>
+
+      <section class="section compare-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Compare</p>
+            <h2>Tier comparison</h2>
+          </div>
+          <p>Quick scanning for collectors who already know what they want.</p>
+        </div>
+        <div class="compare-table" id="compareTable"></div>
+      </section>
+
+      <section class="section faq-section" id="faq">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FAQ</p>
+            <h2>Plain answers before checkout</h2>
+          </div>
+        </div>
+        <div class="faq-list" id="faqList"></div>
+      </section>
+
+    </main>
+
+    <aside class="join-tray" id="joinTray" aria-hidden="true" aria-label="Membership checkout redirect">
+      <div class="tray-panel">
+        <div class="tray-header">
+          <h2 id="trayTitle">Membership</h2>
+          <button class="icon-button" id="closeTray" type="button" aria-label="Close">X</button>
+        </div>
+        <p id="trayCopy"></p>
+        <div class="secure-note">
+          <strong>Redirecting to Square</strong>
+          <span>Payment is completed through your Square checkout link.</span>
+        </div>
+        <a class="button primary full" id="squareCheckoutLink" target="_blank" rel="noopener">Continue to Square</a>
+        <button class="button ghost full" id="copySquareLink" type="button">Copy Square link</button>
+        <p class="form-note" id="trayMessage"></p>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
