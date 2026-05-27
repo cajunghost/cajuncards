@@ -45,6 +45,7 @@ const fallbackConfig = {
     secondaryCta: "Discord drops"
   },
   announcements: [],
+  discordServerUrl: "",
   subscriptions: fallbackSubscriptions
 };
 
@@ -132,6 +133,23 @@ function closeTray() {
   $("#joinTray").setAttribute("aria-hidden", "true");
 }
 
+function openDiscordTray() {
+  const discordUrl = config.discordServerUrl || "";
+  $("#discordServerLink").href = discordUrl || "#memberships";
+  $("#discordServerLink").textContent = discordUrl ? "Open Discord" : "Discord link coming soon";
+  $("#discordJoinCopy").textContent = discordUrl
+    ? "This opens the Cajun Cards Discord server invite."
+    : "Add your Discord server invite link in the admin panel.";
+  $("#discordTrayMessage").textContent = discordUrl ? "" : "The Discord invite has not been configured yet.";
+  $("#discordTray").classList.add("open");
+  $("#discordTray").setAttribute("aria-hidden", "false");
+}
+
+function closeDiscordTray() {
+  $("#discordTray").classList.remove("open");
+  $("#discordTray").setAttribute("aria-hidden", "true");
+}
+
 function downloadConfig() {
   const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -150,6 +168,8 @@ document.addEventListener("click", async (event) => {
   }
 
   if (event.target.id === "closeTray") closeTray();
+  if (event.target.id === "openDiscordJoin") openDiscordTray();
+  if (event.target.id === "closeDiscordTray") closeDiscordTray();
   if (event.target.id === "downloadConfig") downloadConfig();
   if (event.target.id === "copySquareLink") {
     const link = selectedTier?.squareUrl || "";
