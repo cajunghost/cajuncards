@@ -16,6 +16,8 @@ const fallbackConfig = {
 
 let config = fallbackConfig;
 const $ = (selector) => document.querySelector(selector);
+const githubRepo = "cajunghost/cajuncards";
+const githubBranch = "main";
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -84,6 +86,61 @@ function downloadConfig() {
   URL.revokeObjectURL(url);
 }
 
+function applySquareLinkForm() {
+  const form = new FormData($("#linkForm"));
+  config.subscriptions = (config.subscriptions || []).map((tier) => ({
+    ...tier,
+    squareUrl: form.get(tier.id) || ""
+  }));
+  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
+}
+
+function toBase64Utf8(value) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  return btoa(binary);
+}
+
+async function githubRequest(path, options = {}) {
+  const token = $("#githubPublishToken").value.trim();
+  if (!token) throw new Error("Paste a GitHub publish token first.");
+  const response = await fetch(`https://api.github.com/repos/${githubRepo}${path}`, {
+    ...options,
+    headers: {
+      "Accept": "application/vnd.github+json",
+      "Authorization": `Bearer ${token}`,
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(options.headers || {})
+    }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.message || `GitHub request failed with ${response.status}`);
+  }
+  return data;
+}
+
+async function publishConfig() {
+  applySquareLinkForm();
+  const path = "config/site.json";
+  $("#adminMessage").textContent = "Publishing config/site.json to GitHub...";
+  const current = await githubRequest(`/contents/${path}?ref=${githubBranch}`);
+  await githubRequest(`/contents/${path}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message: "Update Square subscription links",
+      branch: githubBranch,
+      sha: current.sha,
+      content: toBase64Utf8(`${JSON.stringify(config, null, 2)}\n`)
+    })
+  });
+  localStorage.removeItem("cajunSitePreviewConfig");
+  $("#adminMessage").textContent = "Published. GitHub Pages may take a minute to show the new links.";
+}
+
 $("#adminLoginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = new FormData(event.target);
@@ -103,14 +160,17 @@ $("#adminLoginForm").addEventListener("submit", async (event) => {
 
 $("#linkForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  const form = new FormData(event.target);
-  config.subscriptions = (config.subscriptions || []).map((tier) => ({
-    ...tier,
-    squareUrl: form.get(tier.id) || ""
-  }));
-  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
+  applySquareLinkForm();
   $("#adminMessage").textContent = "Square links previewed locally. Download site.json and commit it to make them public.";
   renderAdmin();
+});
+
+$("#publishConfig").addEventListener("click", async () => {
+  try {
+    await publishConfig();
+  } catch (error) {
+    $("#adminMessage").textContent = `Publish failed: ${error.message}`;
+  }
 });
 
 $("#dropForm").addEventListener("submit", (event) => {
