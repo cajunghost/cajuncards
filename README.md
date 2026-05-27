@@ -50,4 +50,6 @@ The helper lets you paste/edit Square links or JSON, preview it locally in the b
 
 The admin helper also has a Discord Drop Notification form. Paste the Discord announcement text and message/channel link there, preview it, then export and commit `site.json` to publish the notice.
 
+For Square links, the admin helper can also publish directly to GitHub from the browser. Paste a GitHub token with Contents read/write for `cajunghost/cajuncards`, update the Square links, then click `Publish Square links permanently`.
+
 This login hides the helper UI from normal visitors, but it is still client-side protection because GitHub Pages is static. Do not put private secrets in this repository.
