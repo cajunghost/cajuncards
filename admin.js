@@ -156,7 +156,7 @@ $("#adminLoginForm").addEventListener("submit", async (event) => {
   const password = String(form.get("password") || "");
   const expectedUser = config.admin?.username || fallbackConfig.admin.username;
   const expectedHash = config.admin?.passwordHash || fallbackConfig.admin.passwordHash;
-  if (username === expectedUser && await sha256(password) === expectedHash) {
+  if (username.toLowerCase() === expectedUser.toLowerCase() && await sha256(password) === expectedHash) {
     setUnlocked(true);
     event.target.reset();
     $("#loginMessage").textContent = "";
