@@ -4,6 +4,13 @@ const fallbackConfig = {
     username: "CajunGamers",
     passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
   },
+  hero: {
+    eyebrow: "Collector memberships with Cajun character",
+    headline: "Cajun Cards & Collectibles",
+    copy: "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every year.",
+    primaryCta: "Compare memberships",
+    secondaryCta: "Discord drops"
+  },
   discordDrop: {
     enabled: false,
     title: "",
@@ -63,6 +70,16 @@ function setUnlocked(value) {
 }
 
 function renderAdmin() {
+  const hero = config.hero || fallbackConfig.hero;
+  const siteForm = $("#siteForm");
+  siteForm.brand.value = config.brand || "";
+  siteForm.heroEyebrow.value = hero.eyebrow || "";
+  siteForm.heroHeadline.value = hero.headline || "";
+  siteForm.heroCopy.value = hero.copy || "";
+  siteForm.primaryCta.value = hero.primaryCta || "";
+  siteForm.secondaryCta.value = hero.secondaryCta || "";
+  siteForm.subscriptionsJson.value = JSON.stringify(config.subscriptions || [], null, 2);
+
   $("#jsonEditor").value = JSON.stringify(config, null, 2);
   $("#squareLinkFields").innerHTML = (config.subscriptions || []).map((tier) => `
     <label>${escapeHtml(tier.name)}
@@ -96,13 +113,75 @@ function downloadConfig() {
   URL.revokeObjectURL(url);
 }
 
-function applySquareLinkForm() {
+function savePreview() {
+  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
+}
+
+function readSubscriptionsJson() {
+  const raw = $("#siteForm").subscriptionsJson.value.trim();
+  if (!raw) return [];
+  const subscriptions = JSON.parse(raw);
+  if (!Array.isArray(subscriptions)) {
+    throw new Error("Subscription tiers JSON must be an array.");
+  }
+  const ids = new Set();
+  subscriptions.forEach((tier, index) => {
+    if (!tier || typeof tier !== "object" || Array.isArray(tier)) {
+      throw new Error(`Tier ${index + 1} must be an object.`);
+    }
+    if (!tier.id || typeof tier.id !== "string") {
+      throw new Error(`Tier ${index + 1} needs a string id.`);
+    }
+    if (ids.has(tier.id)) {
+      throw new Error(`Duplicate tier id: ${tier.id}`);
+    }
+    ids.add(tier.id);
+  });
+  return subscriptions;
+}
+
+function applySiteForm() {
+  const form = $("#siteForm");
+  config.brand = form.brand.value.trim() || fallbackConfig.brand;
+  config.hero = {
+    ...(config.hero || fallbackConfig.hero),
+    eyebrow: form.heroEyebrow.value.trim(),
+    headline: form.heroHeadline.value.trim(),
+    copy: form.heroCopy.value.trim(),
+    primaryCta: form.primaryCta.value.trim(),
+    secondaryCta: form.secondaryCta.value.trim()
+  };
+  config.subscriptions = readSubscriptionsJson();
+  savePreview();
+}
+
+function applySquareLinkForm({ save = true } = {}) {
   const form = new FormData($("#linkForm"));
   config.subscriptions = (config.subscriptions || []).map((tier) => ({
     ...tier,
-    squareUrl: form.get(tier.id) || ""
+    squareUrl: form.has(tier.id) ? form.get(tier.id) || "" : tier.squareUrl || ""
   }));
-  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
+  if (save) savePreview();
+}
+
+function applyDropForm({ save = true } = {}) {
+  const form = $("#dropForm");
+  config.discordServerUrl = form.serverUrl.value.trim();
+  config.discordDrop = {
+    enabled: form.enabled.checked,
+    title: form.title.value.trim(),
+    message: form.message.value.trim(),
+    discordUrl: form.discordUrl.value.trim(),
+    postedAt: form.postedAt.value.trim()
+  };
+  if (save) savePreview();
+}
+
+function applyAllAdminForms() {
+  applySiteForm();
+  applySquareLinkForm({ save: false });
+  applyDropForm({ save: false });
+  savePreview();
 }
 
 function toBase64Utf8(value) {
@@ -134,14 +213,14 @@ async function githubRequest(path, options = {}) {
 }
 
 async function publishConfig() {
-  applySquareLinkForm();
+  applyAllAdminForms();
   const path = "config/site.json";
   $("#adminMessage").textContent = "Publishing config/site.json to GitHub...";
   const current = await githubRequest(`/contents/${path}?ref=${githubBranch}`);
   await githubRequest(`/contents/${path}`, {
     method: "PUT",
     body: JSON.stringify({
-      message: "Update Square subscription links",
+      message: "Update Cajun Cards site configuration",
       branch: githubBranch,
       sha: current.sha,
       content: toBase64Utf8(`${JSON.stringify(config, null, 2)}\n`)
@@ -171,8 +250,19 @@ $("#adminLoginForm").addEventListener("submit", async (event) => {
 $("#linkForm").addEventListener("submit", (event) => {
   event.preventDefault();
   applySquareLinkForm();
-  $("#adminMessage").textContent = "Square links previewed locally. Download site.json and commit it to make them public.";
+  $("#adminMessage").textContent = "Square links previewed locally. Use Publish config permanently to make them public.";
   renderAdmin();
+});
+
+$("#siteForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  try {
+    applySiteForm();
+    $("#adminMessage").textContent = "Website edits previewed locally. Use Publish config permanently to make them public.";
+    renderAdmin();
+  } catch (error) {
+    $("#adminMessage").textContent = `Website editor error: ${error.message}`;
+  }
 });
 
 $("#publishConfig").addEventListener("click", async () => {
@@ -185,17 +275,8 @@ $("#publishConfig").addEventListener("click", async () => {
 
 $("#dropForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  const form = event.target;
-  config.discordServerUrl = form.serverUrl.value;
-  config.discordDrop = {
-    enabled: form.enabled.checked,
-    title: form.title.value,
-    message: form.message.value,
-    discordUrl: form.discordUrl.value,
-    postedAt: form.postedAt.value
-  };
-  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
-  $("#adminMessage").textContent = "Discord drop notification previewed locally. Download site.json and commit it to make it public.";
+  applyDropForm();
+  $("#adminMessage").textContent = "Discord settings previewed locally. Use Publish config permanently to make them public.";
   renderAdmin();
 });
 
@@ -203,8 +284,8 @@ $("#jsonForm").addEventListener("submit", (event) => {
   event.preventDefault();
   try {
     config = JSON.parse($("#jsonEditor").value);
-    localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
-    $("#adminMessage").textContent = "Config previewed locally. Download site.json and commit it to make it public.";
+    savePreview();
+    $("#adminMessage").textContent = "Config previewed locally. Use Publish config permanently to make it public.";
     renderAdmin();
   } catch (error) {
     $("#adminMessage").textContent = `JSON error: ${error.message}`;
