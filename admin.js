@@ -1,8 +1,8 @@
 const fallbackConfig = {
   brand: "Cajun Cards & Collectibles",
   admin: {
-    username: "admin",
-    passwordHash: "9a4aabf0e5cf71cae2cea646613ce7e2a5919fa758e56819704be25a3a2c1f0b"
+    username: "CajunGamers",
+    passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
   },
   subscriptions: []
 };
