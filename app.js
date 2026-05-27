@@ -37,36 +37,33 @@ const fallbackSubscriptions = [
 
 const fallbackConfig = {
   brand: "Cajun Cards & Collectibles",
+  meta: { description: "" },
+  footer: { tagline: "A TCG collector club with Cajun character.", copyright: "2026 Cajun Cards & Collectibles. All rights reserved." },
   hero: {
     eyebrow: "Collector memberships with Cajun character",
     headline: "Cajun Cards & Collectibles",
     copy: "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every year.",
-    primaryCta: "Compare memberships",
-    secondaryCta: "Discord drops"
+    primaryCta: "Explore memberships",
+    secondaryCta: "Join Discord"
   },
   announcements: [],
   discordServerUrl: "",
+  discordDrop: { enabled: false, title: "", message: "", discordUrl: "", postedAt: "" },
   subscriptions: fallbackSubscriptions
 };
 
 let config = fallbackConfig;
 let selectedTier = null;
 
-const $ = (selector) => document.querySelector(selector);
+const $ = (id) => document.getElementById(id);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+  return String(value ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 }
 
 function getPath(path) {
-  return path.split(".").reduce((value, key) => value?.[key], config);
+  return path.split(".").reduce((v, k) => v?.[k], config);
 }
 
 async function loadConfig() {
@@ -76,114 +73,127 @@ async function loadConfig() {
 
 function applyTextConfig() {
   document.title = config.brand || fallbackConfig.brand;
-  $$("[data-config]").forEach((node) => {
-    node.textContent = getPath(node.dataset.config) || "";
+  const metaEl = document.getElementById("metaDesc");
+  if (metaEl && config.meta?.description) metaEl.content = config.meta.description;
+  document.querySelectorAll("[data-config]").forEach((node) => {
+    node.textContent = getPath(node.dataset.config) ?? "";
   });
 }
 
+function renderAnnouncementStrip() {
+  const items = config.announcements || [];
+  const strip = $("announcementStrip");
+  if (!items.length) { strip.hidden = true; return; }
+  const doubled = [...items, ...items];
+  $("announcementTrack").innerHTML = doubled.map((item) =>
+    `<span class="announcement-item">${escapeHtml(item)}</span>`
+  ).join("");
+  strip.hidden = false;
+}
+
+function renderDiscordDrop() {
+  const drop = config.discordDrop;
+  const wrap = $("discordDropWrap");
+  if (!drop?.enabled) { wrap.hidden = true; return; }
+  $("dropTitle").textContent = drop.title || "";
+  $("dropMessage").textContent = drop.message || "";
+  $("dropPostedAt").textContent = drop.postedAt || "";
+  const link = $("dropLink");
+  link.href = drop.discordUrl || "#";
+  link.hidden = !drop.discordUrl;
+  wrap.hidden = false;
+}
+
 function renderSubscriptions() {
-  const tiers = (config.subscriptions?.length ? config.subscriptions : fallbackSubscriptions);
-  $("#subscriptionGrid").innerHTML = tiers.map((tier) => `
-    <article class="subscription-card ${tier.popular ? "popular" : ""}">
+  const tiers = config.subscriptions?.length ? config.subscriptions : fallbackSubscriptions;
+  $("subscriptionGrid").innerHTML = tiers.map((tier) => `
+    <article class="subscription-card${tier.popular ? " popular" : ""}">
       <div class="tier-head">
-        <div>
+        <div class="tier-name-wrap">
           <span class="badge">${escapeHtml(tier.tag || "Membership")}</span>
           <h3>${escapeHtml(tier.name)}</h3>
         </div>
-        <div>
+        <div class="tier-price-wrap">
           <div class="price">${escapeHtml(tier.price)}</div>
           <div class="cadence">${escapeHtml(tier.cadence)}</div>
         </div>
       </div>
-      <p>${escapeHtml(tier.summary)}</p>
-      <ul>${(tier.features || []).map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}</ul>
-      <p><strong>Best for:</strong> ${escapeHtml(tier.bestFor)}</p>
-      <button class="button primary" type="button" data-join-tier="${escapeHtml(tier.id)}">Join with Square</button>
+      <p class="tier-summary">${escapeHtml(tier.summary)}</p>
+      <ul>${(tier.features || []).map((f) => `<li>${escapeHtml(f)}</li>`).join("")}</ul>
+      <p class="tier-best-for"><strong>Best for:</strong> ${escapeHtml(tier.bestFor)}</p>
+      <button class="button primary full" type="button" data-join-tier="${escapeHtml(tier.id)}">Join with Square</button>
     </article>
-  `).join("") || "<p>No subscriptions match that search.</p>";
+  `).join("");
 }
 
 function renderAll() {
   applyTextConfig();
+  renderAnnouncementStrip();
+  renderDiscordDrop();
   renderSubscriptions();
 }
 
 function showToast(message) {
-  const toast = $("#toast");
+  const toast = $("toast");
   toast.textContent = message;
   toast.classList.add("show");
-  window.setTimeout(() => toast.classList.remove("show"), 2600);
+  window.setTimeout(() => toast.classList.remove("show"), 2800);
 }
 
 function openTray(tier) {
   selectedTier = tier;
-  $("#trayTitle").textContent = tier.name;
-  $("#trayCopy").textContent = tier.squareUrl
+  $("trayTitle").textContent = tier.name;
+  $("trayCopy").textContent = tier.squareUrl
     ? `${tier.name} will open in Square checkout.`
-    : `${tier.name} needs a Square checkout link before this button can send traffic.`;
-  $("#squareCheckoutLink").href = tier.squareUrl || "#memberships";
-  $("#squareCheckoutLink").textContent = tier.squareUrl ? "Continue to Square" : "Square link coming soon";
-  $("#trayMessage").textContent = tier.squareUrl ? "" : "This tier needs a Square link before it can send traffic.";
-  $("#joinTray").classList.add("open");
-  $("#joinTray").setAttribute("aria-hidden", "false");
+    : `${tier.name} needs a Square checkout link — contact the admin.`;
+  $("squareCheckoutLink").href = tier.squareUrl || "#memberships";
+  $("squareCheckoutLink").textContent = tier.squareUrl ? "Continue to Square" : "Square link coming soon";
+  $("trayMessage").textContent = tier.squareUrl ? "" : "This tier needs a Square link before it can send traffic.";
+  $("joinTray").classList.add("open");
+  $("joinTray").setAttribute("aria-hidden", "false");
 }
 
 function closeTray() {
-  $("#joinTray").classList.remove("open");
-  $("#joinTray").setAttribute("aria-hidden", "true");
+  $("joinTray").classList.remove("open");
+  $("joinTray").setAttribute("aria-hidden", "true");
 }
 
 function openDiscordTray() {
-  const discordUrl = config.discordServerUrl || "";
-  $("#discordServerLink").href = discordUrl || "#memberships";
-  $("#discordServerLink").textContent = discordUrl ? "Open Discord" : "Discord link coming soon";
-  $("#discordJoinCopy").textContent = discordUrl
+  const url = config.discordServerUrl || "";
+  $("discordServerLink").href = url || "#";
+  $("discordServerLink").textContent = url ? "Open Discord" : "Discord link coming soon";
+  $("discordJoinCopy").textContent = url
     ? "This opens the Cajun Cards Discord server invite."
-    : "Add your Discord server invite link in the admin panel.";
-  $("#discordTrayMessage").textContent = discordUrl ? "" : "The Discord invite has not been configured yet.";
-  $("#discordTray").classList.add("open");
-  $("#discordTray").setAttribute("aria-hidden", "false");
+    : "The Discord invite link hasn't been configured yet.";
+  $("discordTrayMessage").textContent = url ? "" : "The Discord invite has not been configured yet.";
+  $("discordTray").classList.add("open");
+  $("discordTray").setAttribute("aria-hidden", "false");
 }
 
 function closeDiscordTray() {
-  $("#discordTray").classList.remove("open");
-  $("#discordTray").setAttribute("aria-hidden", "true");
-}
-
-function downloadConfig() {
-  const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "site.json";
-  link.click();
-  URL.revokeObjectURL(url);
+  $("discordTray").classList.remove("open");
+  $("discordTray").setAttribute("aria-hidden", "true");
 }
 
 document.addEventListener("click", async (event) => {
   const joinButton = event.target.closest("[data-join-tier]");
   if (joinButton) {
-    const tier = (config.subscriptions || []).find((candidate) => candidate.id === joinButton.dataset.joinTier);
+    const tier = (config.subscriptions || []).find((t) => t.id === joinButton.dataset.joinTier);
     if (tier) openTray(tier);
+    return;
   }
-
-  if (event.target.id === "closeTray") closeTray();
-  if (event.target.id === "openDiscordJoin") openDiscordTray();
-  if (event.target.id === "closeDiscordTray") closeDiscordTray();
-  if (event.target.id === "downloadConfig") downloadConfig();
+  if (event.target.id === "closeTray")      { closeTray(); return; }
+  if (event.target.id === "closeDiscordTray") { closeDiscordTray(); return; }
+  if (event.target.id === "openDiscordJoin" || event.target.id === "openDiscordHero") {
+    openDiscordTray(); return;
+  }
   if (event.target.id === "copySquareLink") {
     const link = selectedTier?.squareUrl || "";
-    if (!link) {
-      showToast("No Square link configured yet.");
-      return;
-    }
+    if (!link) { showToast("No Square link configured yet."); return; }
     await navigator.clipboard.writeText(link);
     showToast("Square link copied.");
   }
 });
-
-$("#openDiscordJoin")?.addEventListener("click", openDiscordTray);
-$("#closeDiscordTray")?.addEventListener("click", closeDiscordTray);
 
 loadConfig()
   .then(renderAll)

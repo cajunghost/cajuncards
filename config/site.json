@@ -1,24 +1,31 @@
 {
   "brand": "Cajun Cards & Collectibles",
+  "meta": {
+    "description": "Subscription memberships for Cajun Cards & Collectibles — a TCG collector club in Louisiana. Three tiers: Bayou Starter, Lagniappe Club, and Fleur-de-Lis Elite."
+  },
+  "footer": {
+    "tagline": "A TCG collector club with Cajun character.",
+    "copyright": "2026 Cajun Cards & Collectibles. All rights reserved."
+  },
   "squareLocationUrl": "https://squareup.com/us/en",
   "hero": {
     "eyebrow": "Collector memberships with Cajun character",
     "headline": "Cajun Cards & Collectibles",
     "copy": "A subscription-first TCG club for online collectors who want Discord alerts, sealed drop access, digital claim windows, and a little lagniappe with every year.",
-    "primaryCta": "Compare memberships",
-    "secondaryCta": "Discord drops"
+    "primaryCta": "Explore memberships",
+    "secondaryCta": "Join Discord"
   },
   "admin": {
     "username": "CajunGamers",
     "passwordHash": "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
   },
   "announcements": [
-    "Square checkout links can be updated any time in config/site.json.",
-    "No on-site payments are collected on this GitHub Pages build.",
-    "Subscriptions redirect to secure Square checkout."
+    "Cajun Cards Discord is now live — join for drop alerts!",
+    "Subscriptions redirect to secure Square checkout — no payment info stored here.",
+    "All tiers include Members-only Discord access and drop notifications."
   ],
   "discordDrop": {
-    "enabled": true,
+    "enabled": false,
     "title": "Discord drop notifications",
     "message": "Join the Cajun Cards Discord for the next live drop alert.",
     "discordUrl": "",
