@@ -50,6 +50,15 @@
             <div id="squareLinkFields"></div>
             <button class="button primary" type="submit">Preview links</button>
           </form>
+          <form class="admin-card" id="dropForm">
+            <h3>Discord Drop Notification</h3>
+            <label><input name="enabled" type="checkbox"> Show on public site</label>
+            <label>Drop title<input name="title" placeholder="Tonight's sealed drop is live"></label>
+            <label>Drop message<textarea name="message" rows="5" placeholder="Paste the announcement text from Discord."></textarea></label>
+            <label>Discord message or channel link<input name="discordUrl" placeholder="https://discord.com/channels/..."></label>
+            <label>Posted at<input name="postedAt" placeholder="May 27, 2026 at 7:00 PM CT"></label>
+            <button class="button primary" type="submit">Preview drop notification</button>
+          </form>
           <form class="admin-card" id="jsonForm">
             <h3>Full Config JSON</h3>
             <label>site.json<textarea id="jsonEditor" rows="18" spellcheck="false"></textarea></label>
