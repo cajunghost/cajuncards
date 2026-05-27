@@ -17,7 +17,7 @@
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="#memberships">Memberships</a>
       </nav>
-      <a class="button compact" href="#memberships">Join</a>
+      <button class="button compact" id="openDiscordJoin" type="button">Join</button>
     </header>
 
     <main>
@@ -57,6 +57,22 @@
         <a class="button primary full" id="squareCheckoutLink" target="_blank" rel="noopener">Continue to Square</a>
         <button class="button ghost full" id="copySquareLink" type="button">Copy Square link</button>
         <p class="form-note" id="trayMessage"></p>
+      </div>
+    </aside>
+
+    <aside class="join-tray" id="discordTray" aria-hidden="true" aria-label="Discord server invite">
+      <div class="tray-panel">
+        <div class="tray-header">
+          <h2>Join the Discord</h2>
+          <button class="icon-button" id="closeDiscordTray" type="button" aria-label="Close">X</button>
+        </div>
+        <p>Get online drop alerts, sealed access notices, and member updates from Cajun Cards & Collectibles.</p>
+        <div class="secure-note">
+          <strong>Discord invite</strong>
+          <span id="discordJoinCopy">Add your Discord server link in the admin panel.</span>
+        </div>
+        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener">Open Discord</a>
+        <p class="form-note" id="discordTrayMessage"></p>
       </div>
     </aside>
 
