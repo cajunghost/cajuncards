@@ -21,56 +21,22 @@
     </header>
 
     <main>
-      <section class="hero" id="home">
-        <div class="hero-copy">
+      <section class="subscriptions-hero" id="home">
+        <div>
           <p class="eyebrow" data-config="hero.eyebrow">Collector memberships with Cajun character</p>
           <h1 data-config="hero.headline">Cajun Cards & Collectibles</h1>
           <p data-config="hero.copy">A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#memberships" data-config="hero.primaryCta">Compare memberships</a>
-            <a class="button secondary" href="#dropNotification" data-config="hero.secondaryCta">Discord drops</a>
-          </div>
         </div>
-        <div class="hero-mark">
-          <img src="assets/logo.svg" alt="Cajun Cards & Collectibles logo">
-        </div>
-      </section>
-
-      <section class="announcement-strip" aria-label="Announcements">
-        <div id="announcementTrack"></div>
-      </section>
-
-      <section class="drop-notification hidden" id="dropNotification" aria-live="polite"></section>
-
-      <section class="toolbar section-lite" aria-label="Membership tools">
-        <div>
-          <p class="eyebrow">Subscription Shop</p>
-          <h2>Pick your collector lane</h2>
-        </div>
-        <div class="tools">
-          <label>
-            Search tiers
-            <input id="tierSearch" type="search" placeholder="breaks, wishlist, VIP">
-          </label>
-          <label>
-            Collector focus
-            <select id="tierFilter">
-              <option value="all">All memberships</option>
-              <option value="starter">New collector</option>
-              <option value="break">Break access</option>
-              <option value="premium">Premium service</option>
-            </select>
-          </label>
-        </div>
+        <img src="assets/logo.svg" alt="Cajun Cards & Collectibles logo">
       </section>
 
       <section class="section" id="memberships">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Memberships</p>
-            <h2>TCG-shop utility, Cajun personality</h2>
+            <h2>Choose your tier</h2>
           </div>
-          <p>Each tier redirects to your Square checkout link. No payment data is collected on this GitHub Pages site.</p>
+          <p>Each button opens Square checkout for that subscription.</p>
         </div>
         <div class="subscription-grid" id="subscriptionGrid" aria-live="polite"></div>
       </section>
