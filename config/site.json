@@ -24,6 +24,7 @@
     "discordUrl": "",
     "postedAt": ""
   },
+  "discordServerUrl": "",
   "subscriptions": [
     {
       "id": "bayou-starter",
