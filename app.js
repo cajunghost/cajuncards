@@ -5,18 +5,21 @@ const fallbackConfig = {
     headline: "Cajun Cards & Collectibles",
     copy: "A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.",
     primaryCta: "Compare memberships",
-    secondaryCta: "View calendar"
+    secondaryCta: "Discord drops"
   },
   announcements: [],
-  subscriptions: [],
-  shopLikeFeatures: [],
-  calendar: [],
-  faq: []
+  discordDrop: {
+    enabled: false,
+    title: "",
+    message: "",
+    discordUrl: "",
+    postedAt: ""
+  },
+  subscriptions: []
 };
 
 let config = fallbackConfig;
 let selectedTier = null;
-const wishlist = JSON.parse(localStorage.getItem("cajunWishlist") || "[]");
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -53,6 +56,25 @@ function renderAnnouncements() {
     <div class="announcement-item"><span>CCC</span> ${escapeHtml(text)}</div>
   `);
   $("#announcementTrack").innerHTML = items.join("");
+}
+
+function renderDiscordDrop() {
+  const drop = config.discordDrop || {};
+  const section = $("#dropNotification");
+  section.classList.toggle("hidden", !drop.enabled);
+  if (!drop.enabled) {
+    section.innerHTML = "";
+    return;
+  }
+  section.innerHTML = `
+    <div>
+      <p class="eyebrow">Discord Drop</p>
+      <h2>${escapeHtml(drop.title || "Discord drop notification")}</h2>
+      <p>${escapeHtml(drop.message || "")}</p>
+      ${drop.postedAt ? `<span>${escapeHtml(drop.postedAt)}</span>` : ""}
+    </div>
+    ${drop.discordUrl ? `<a class="button primary" href="${escapeHtml(drop.discordUrl)}" target="_blank" rel="noopener">Open Discord drop</a>` : ""}
+  `;
 }
 
 function tierMatches(tier) {
@@ -95,73 +117,11 @@ function renderSubscriptions() {
   `).join("") || "<p>No subscriptions match that search.</p>";
 }
 
-function renderFeatures() {
-  $("#featureGrid").innerHTML = (config.shopLikeFeatures || []).map((feature) => `
-    <article class="feature-card">
-      <h3>${escapeHtml(feature.title)}</h3>
-      <p>${escapeHtml(feature.copy)}</p>
-    </article>
-  `).join("");
-}
-
-function renderCalendar() {
-  $("#calendarList").innerHTML = (config.calendar || []).map((item) => `
-    <article class="calendar-item">
-      <span>${escapeHtml(item.type)}</span>
-      <strong>${escapeHtml(item.date)}</strong>
-      <p>${escapeHtml(item.title)}</p>
-    </article>
-  `).join("");
-}
-
-function renderCompare() {
-  const tiers = config.subscriptions || [];
-  const featureRows = ["Price", "Best for", "Primary perks", "Square link"];
-  const rowHtml = featureRows.map((row) => {
-    const cells = tiers.map((tier) => {
-      if (row === "Price") return `${escapeHtml(tier.price)} / ${escapeHtml(tier.cadence)}`;
-      if (row === "Best for") return escapeHtml(tier.bestFor);
-      if (row === "Primary perks") return escapeHtml((tier.features || []).slice(0, 3).join(", "));
-      return tier.squareUrl ? "Configured" : "Needs Square link";
-    });
-    return `<tr><th>${row}</th>${cells.map((cell) => `<td>${cell}</td>`).join("")}</tr>`;
-  }).join("");
-  $("#compareTable").innerHTML = `
-    <table>
-      <thead><tr><th>Tier</th>${tiers.map((tier) => `<th>${escapeHtml(tier.name)}</th>`).join("")}</tr></thead>
-      <tbody>${rowHtml}</tbody>
-    </table>
-  `;
-}
-
-function renderFaq() {
-  $("#faqList").innerHTML = (config.faq || []).map((item) => `
-    <details class="faq-card">
-      <summary><strong>${escapeHtml(item.question)}</strong></summary>
-      <p>${escapeHtml(item.answer)}</p>
-    </details>
-  `).join("");
-}
-
-function renderWishlist() {
-  $("#wishlistItems").innerHTML = wishlist.map((item, index) => `
-    <div class="wishlist-item">
-      <strong>${escapeHtml(item.target)}</strong>
-      <p>${escapeHtml(item.notes)}</p>
-      <button class="button ghost" type="button" data-remove-wishlist="${index}">Remove</button>
-    </div>
-  `).join("");
-}
-
 function renderAll() {
   applyTextConfig();
   renderAnnouncements();
+  renderDiscordDrop();
   renderSubscriptions();
-  renderFeatures();
-  renderCalendar();
-  renderCompare();
-  renderFaq();
-  renderWishlist();
 }
 
 function showToast(message) {
@@ -206,13 +166,6 @@ document.addEventListener("click", async (event) => {
     if (tier) openTray(tier);
   }
 
-  const removeWishlist = event.target.closest("[data-remove-wishlist]");
-  if (removeWishlist) {
-    wishlist.splice(Number(removeWishlist.dataset.removeWishlist), 1);
-    localStorage.setItem("cajunWishlist", JSON.stringify(wishlist));
-    renderWishlist();
-  }
-
   if (event.target.id === "closeTray") closeTray();
   if (event.target.id === "downloadConfig") downloadConfig();
   if (event.target.id === "copySquareLink") {
@@ -228,18 +181,6 @@ document.addEventListener("click", async (event) => {
 
 $("#tierSearch").addEventListener("input", renderSubscriptions);
 $("#tierFilter").addEventListener("change", renderSubscriptions);
-
-$("#wishlistForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = new FormData(event.target);
-  wishlist.push({
-    target: form.get("target"),
-    notes: form.get("notes")
-  });
-  localStorage.setItem("cajunWishlist", JSON.stringify(wishlist));
-  event.target.reset();
-  renderWishlist();
-});
 
 loadConfig()
   .then(renderAll)
