@@ -4,6 +4,13 @@ const fallbackConfig = {
     username: "CajunGamers",
     passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
   },
+  discordDrop: {
+    enabled: false,
+    title: "",
+    message: "",
+    discordUrl: "",
+    postedAt: ""
+  },
   subscriptions: []
 };
 
@@ -51,6 +58,13 @@ function renderAdmin() {
       <input name="${escapeHtml(tier.id)}" value="${escapeHtml(tier.squareUrl || "")}" placeholder="https://square.link/u/...">
     </label>
   `).join("");
+  const drop = config.discordDrop || fallbackConfig.discordDrop;
+  const dropForm = $("#dropForm");
+  dropForm.enabled.checked = Boolean(drop.enabled);
+  dropForm.title.value = drop.title || "";
+  dropForm.message.value = drop.message || "";
+  dropForm.discordUrl.value = drop.discordUrl || "";
+  dropForm.postedAt.value = drop.postedAt || "";
 }
 
 function renderAuthState() {
@@ -96,6 +110,21 @@ $("#linkForm").addEventListener("submit", (event) => {
   }));
   localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
   $("#adminMessage").textContent = "Square links previewed locally. Download site.json and commit it to make them public.";
+  renderAdmin();
+});
+
+$("#dropForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = event.target;
+  config.discordDrop = {
+    enabled: form.enabled.checked,
+    title: form.title.value,
+    message: form.message.value,
+    discordUrl: form.discordUrl.value,
+    postedAt: form.postedAt.value
+  };
+  localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
+  $("#adminMessage").textContent = "Discord drop notification previewed locally. Download site.json and commit it to make it public.";
   renderAdmin();
 });
 
