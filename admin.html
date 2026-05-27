@@ -6,29 +6,35 @@
     <title>Cajun Admin</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Back to Cajun Cards & Collectibles">
+      <a class="brand" href="index.html" aria-label="Back to Cajun Cards &amp; Collectibles">
         <img src="assets/logo.svg" alt="">
         <span>Cajun Admin</span>
       </a>
       <nav class="site-nav" aria-label="Admin navigation">
-        <a href="index.html">Public site</a>
+        <a href="index.html" target="_blank" rel="noopener">Public site ↗</a>
       </nav>
     </header>
 
     <main>
+
+      <!-- ── Login ──────────────────────────────────── -->
       <section class="section admin-login-section" id="adminLoginSection">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Private Helper</p>
             <h1>Admin Login</h1>
           </div>
-          <p>This page is intentionally unlinked from the public site. Login unlocks the private configuration editor in this browser.</p>
+          <p>This page is intentionally unlinked from the public site. Login unlocks the private configuration editor for this browser session.</p>
         </div>
-        <form class="admin-card admin-login-card" id="adminLoginForm">
+        <form class="admin-login-card" id="adminLoginForm">
           <label>Username<input name="username" autocomplete="username" required></label>
           <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
           <button class="button primary" type="submit">Unlock admin tools</button>
@@ -36,65 +42,151 @@
         </form>
       </section>
 
-      <section class="section admin-section hidden" id="adminPanel">
-        <div class="section-heading">
+      <!-- ── Admin Panel ────────────────────────────── -->
+      <section class="section hidden" id="adminPanel">
+
+        <div class="admin-header-row">
           <div>
             <p class="eyebrow">Admin Helper</p>
-            <h2>Square links and site configuration</h2>
+            <h2>Site Configuration</h2>
           </div>
-          <p>Preview changes locally, then publish them directly to your GitHub Pages repository with a GitHub token.</p>
+          <div class="admin-header-actions">
+            <a class="button ghost compact" href="index.html" target="_blank" rel="noopener">View site ↗</a>
+            <button class="button ghost compact" id="adminLogout" type="button">Lock admin</button>
+          </div>
         </div>
-        <div class="admin-grid">
-          <form class="admin-card" id="siteForm">
-            <h3>Public Website Editor</h3>
-            <label>Brand name<input name="brand" placeholder="Cajun Cards & Collectibles"></label>
-            <label>Hero eyebrow<input name="heroEyebrow" placeholder="Collector memberships with Cajun character"></label>
-            <label>Hero headline<input name="heroHeadline" placeholder="Cajun Cards & Collectibles"></label>
-            <label>Hero copy<textarea name="heroCopy" rows="4" placeholder="Rewrite the public intro copy."></textarea></label>
-            <label>Primary CTA text<input name="primaryCta" placeholder="Compare memberships"></label>
-            <label>Secondary CTA text<input name="secondaryCta" placeholder="Discord drops"></label>
-            <label>Subscription tiers JSON<textarea name="subscriptionsJson" rows="18" spellcheck="false"></textarea></label>
-            <button class="button primary" type="submit">Preview website edits</button>
-            <p class="form-note">Rewrite the tiers freely here. Keep each tier id unique so Square links stay mapped correctly.</p>
-          </form>
-          <form class="admin-card" id="linkForm">
-            <h3>Square Links</h3>
-            <div id="squareLinkFields"></div>
-            <button class="button primary" type="submit">Preview links</button>
-            <div class="publish-box">
-              <h3>Publish Without GitHub</h3>
-              <p class="form-note">Paste a GitHub token with Contents read/write for `cajunghost/cajuncards`. It stays in this browser session and is used only to update `config/site.json`.</p>
-              <label>GitHub publish token<input id="githubPublishToken" type="password" autocomplete="off" placeholder="github_pat_..."></label>
-              <button class="button secondary" id="publishConfig" type="button">Publish config permanently</button>
+
+        <!-- Global status message -->
+        <div class="admin-status info hidden" id="adminMessage" role="status"></div>
+
+        <!-- Global GitHub Token -->
+        <div class="admin-token-box">
+          <h3>GitHub Publish Token</h3>
+          <p class="form-note">Paste a fine-grained token with <strong>Contents: read &amp; write</strong> for <code>cajunghost/cajuncards</code>. Saved in this browser session only — never sent anywhere except the GitHub API.</p>
+          <div class="token-row">
+            <label>Token<input id="githubPublishToken" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+            <button class="button secondary" id="saveToken" type="button">Save</button>
+          </div>
+          <p class="token-status unset" id="tokenStatus">No token saved.</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="admin-tabs" role="tablist" aria-label="Admin sections">
+          <button class="tab-btn active" data-tab="content"  role="tab" aria-selected="true">Site Content</button>
+          <button class="tab-btn"        data-tab="tiers"    role="tab" aria-selected="false">Tiers</button>
+          <button class="tab-btn"        data-tab="square"   role="tab" aria-selected="false">Square</button>
+          <button class="tab-btn"        data-tab="discord"  role="tab" aria-selected="false">Discord</button>
+          <button class="tab-btn"        data-tab="advanced" role="tab" aria-selected="false">Advanced</button>
+        </div>
+
+        <!-- ── Tab: Site Content ── -->
+        <div class="tab-pane active" id="tab-content">
+          <form id="siteForm">
+            <div class="admin-grid">
+              <div class="admin-card">
+                <h3>Brand &amp; Hero</h3>
+                <label>Brand name<input name="brand" placeholder="Cajun Cards &amp; Collectibles"></label>
+                <label>Meta description (SEO)<textarea name="metaDescription" rows="3" placeholder="What search engines show for this page."></textarea></label>
+                <label>Hero eyebrow<input name="heroEyebrow" placeholder="Collector memberships with Cajun character"></label>
+                <label>Hero headline<input name="heroHeadline" placeholder="Cajun Cards &amp; Collectibles"></label>
+                <label>Hero copy<textarea name="heroCopy" rows="4" placeholder="Rewrite the public intro copy."></textarea></label>
+                <label>Primary CTA text<input name="primaryCta" placeholder="Explore memberships"></label>
+                <label>Secondary CTA text<input name="secondaryCta" placeholder="Join Discord"></label>
+              </div>
+              <div class="admin-card">
+                <h3>Footer &amp; Announcements</h3>
+                <label>Footer tagline<input name="footerTagline" placeholder="A TCG collector club with Cajun character."></label>
+                <label>Footer copyright line<input name="footerCopyright" placeholder="2026 Cajun Cards &amp; Collectibles"></label>
+                <p class="card-subheading">Announcement Ticker</p>
+                <p class="form-note">Each item scrolls across the top of the site. Add, remove, or leave empty to hide the strip.</p>
+                <div id="announcementList" class="announcement-edit-list"></div>
+                <div class="announcement-add-row">
+                  <input id="newAnnouncement" placeholder="New announcement text...">
+                  <button class="button secondary" id="addAnnouncement" type="button">Add</button>
+                </div>
+              </div>
+            </div>
+            <div class="button-row" style="margin-top:18px">
+              <button class="button primary" type="submit">Preview site edits</button>
+              <button class="button secondary" id="publishSiteContent" type="button">Publish to GitHub</button>
             </div>
           </form>
-          <form class="admin-card" id="dropForm">
-            <h3>Discord Drop Notification</h3>
+        </div>
+
+        <!-- ── Tab: Tiers ── -->
+        <div class="tab-pane" id="tab-tiers">
+          <form id="tiersForm" class="admin-card">
+            <h3>Subscription Tiers JSON</h3>
+            <p class="form-note">Edit the tiers array directly. Keep each tier <code>id</code> unique — Square links are mapped to tiers by ID. Changes here update the memberships grid on the public site.</p>
+            <label>Tiers JSON<textarea id="tiersJson" name="subscriptionsJson" rows="24" spellcheck="false"></textarea></label>
+            <div class="button-row">
+              <button class="button primary" type="submit">Preview tiers</button>
+              <button class="button secondary" id="publishTiers" type="button">Publish to GitHub</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── Tab: Square ── -->
+        <div class="tab-pane" id="tab-square">
+          <form id="linkForm" class="admin-card">
+            <h3>Square Checkout Links</h3>
+            <p class="form-note">Map each subscription tier to a Square checkout URL. These links open when a visitor clicks a tier's "Join with Square" button.</p>
+            <div id="squareLinkFields"></div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Preview links</button>
+              <button class="button secondary" id="publishSquare" type="button">Publish to GitHub</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── Tab: Discord ── -->
+        <div class="tab-pane" id="tab-discord">
+          <form id="dropForm" class="admin-card">
+            <h3>Discord Server &amp; Drop Notification</h3>
             <label>Discord server invite link<input name="serverUrl" placeholder="https://discord.gg/..."></label>
-            <label><input name="enabled" type="checkbox"> Show on public site</label>
+            <label class="checkbox-label">
+              <input name="enabled" type="checkbox" style="min-height:0;width:auto;flex-shrink:0">
+              Show drop notification banner on the public site
+            </label>
             <label>Drop title<input name="title" placeholder="Tonight's sealed drop is live"></label>
-            <label>Drop message<textarea name="message" rows="5" placeholder="Paste the announcement text from Discord."></textarea></label>
+            <label>Drop message<textarea name="message" rows="4" placeholder="Paste the announcement text from Discord."></textarea></label>
             <label>Discord message or channel link<input name="discordUrl" placeholder="https://discord.com/channels/..."></label>
             <label>Posted at<input name="postedAt" placeholder="May 27, 2026 at 7:00 PM CT"></label>
-            <button class="button primary" type="submit">Preview drop notification</button>
-            <div class="publish-box">
-              <h3>Publish Discord Config</h3>
-              <p class="form-note">Paste a GitHub token to permanently save the Discord server invite link and drop settings to `config/site.json`.</p>
-              <label>GitHub publish token<input id="discordGithubPublishToken" type="password" autocomplete="off" placeholder="github_pat_..."></label>
-              <button class="button secondary" id="publishDiscordConfig" type="button">Publish Discord config</button>
-            </div>
-          </form>
-          <form class="admin-card" id="jsonForm">
-            <h3>Full Config JSON</h3>
-            <label>site.json<textarea id="jsonEditor" rows="18" spellcheck="false"></textarea></label>
             <div class="button-row">
-              <button class="button primary" type="submit">Preview JSON</button>
-              <button class="button secondary" id="downloadConfig" type="button">Download site.json</button>
-              <button class="button ghost" id="adminLogout" type="button">Lock admin</button>
+              <button class="button primary" type="submit">Preview Discord settings</button>
+              <button class="button secondary" id="publishDiscord" type="button">Publish to GitHub</button>
             </div>
-            <p class="form-note" id="adminMessage" role="status"></p>
           </form>
         </div>
+
+        <!-- ── Tab: Advanced ── -->
+        <div class="tab-pane" id="tab-advanced">
+          <div class="admin-grid">
+            <form id="jsonForm" class="admin-card">
+              <h3>Full Config JSON</h3>
+              <p class="form-note">Direct access to the entire <code>config/site.json</code> object. Edits here override all other form values.</p>
+              <label>site.json<textarea id="jsonEditor" rows="26" spellcheck="false"></textarea></label>
+              <div class="button-row">
+                <button class="button primary" type="submit">Preview JSON</button>
+                <button class="button ghost" id="downloadConfig" type="button">Download</button>
+                <button class="button secondary" id="publishJson" type="button">Publish JSON</button>
+              </div>
+            </form>
+
+            <div class="admin-card">
+              <h3>Change Admin Password</h3>
+              <p class="form-note">Updates the password used to unlock this admin panel. After saving, the new password is published to GitHub immediately using your saved token.</p>
+              <form id="passwordForm" style="display:grid;gap:14px">
+                <label>Current password<input id="currentPassword" type="password" autocomplete="current-password"></label>
+                <label>New password<input id="newPassword" type="password" autocomplete="new-password"></label>
+                <label>Confirm new password<input id="confirmPassword" type="password" autocomplete="new-password"></label>
+                <button class="button primary" type="submit">Save &amp; publish password</button>
+                <p class="form-note" id="passwordMessage" role="status"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+
       </section>
     </main>
 
