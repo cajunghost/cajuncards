@@ -11,6 +11,7 @@ const fallbackConfig = {
     discordUrl: "",
     postedAt: ""
   },
+  discordServerUrl: "",
   subscriptions: []
 };
 
@@ -70,6 +71,7 @@ function renderAdmin() {
   `).join("");
   const drop = config.discordDrop || fallbackConfig.discordDrop;
   const dropForm = $("#dropForm");
+  dropForm.serverUrl.value = config.discordServerUrl || "";
   dropForm.enabled.checked = Boolean(drop.enabled);
   dropForm.title.value = drop.title || "";
   dropForm.message.value = drop.message || "";
@@ -184,6 +186,7 @@ $("#publishConfig").addEventListener("click", async () => {
 $("#dropForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const form = event.target;
+  config.discordServerUrl = form.serverUrl.value;
   config.discordDrop = {
     enabled: form.enabled.checked,
     title: form.title.value,
