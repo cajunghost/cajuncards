@@ -1,0 +1,122 @@
+{
+  "brand": "Cajun Cards & Collectibles",
+  "squareLocationUrl": "https://squareup.com/us/en",
+  "hero": {
+    "eyebrow": "Collector memberships with Cajun character",
+    "headline": "Cajun Cards & Collectibles",
+    "copy": "A subscription-first TCG club for collectors who want early drop alerts, live break access, trade-night perks, and a little lagniappe with every month.",
+    "primaryCta": "Compare memberships",
+    "secondaryCta": "View calendar"
+  },
+  "admin": {
+    "username": "admin",
+    "passwordHash": "9a4aabf0e5cf71cae2cea646613ce7e2a5919fa758e56819704be25a3a2c1f0b"
+  },
+  "announcements": [
+    "Square checkout links can be updated any time in config/site.json.",
+    "No on-site payments are collected on this GitHub Pages build.",
+    "Subscriptions redirect to secure Square checkout."
+  ],
+  "subscriptions": [
+    {
+      "id": "bayou-starter",
+      "name": "Bayou Starter",
+      "price": "$9",
+      "cadence": "monthly",
+      "tag": "New Collector",
+      "squareUrl": "",
+      "summary": "For collectors who want the drop radar, event calendar, and member-only alerts without overcommitting.",
+      "features": [
+        "Early alerts for sealed product and singles",
+        "Monthly TCG market email",
+        "Trade-night calendar access",
+        "Members-only Discord invite"
+      ],
+      "bestFor": "Casual collectors, parents, and new TCG players"
+    },
+    {
+      "id": "lagniappe-club",
+      "name": "Lagniappe Club",
+      "price": "$29",
+      "cadence": "monthly",
+      "tag": "Most Popular",
+      "popular": true,
+      "squareUrl": "",
+      "summary": "The core collector membership with useful monthly value, break priority, and members-only opportunities.",
+      "features": [
+        "Everything in Bayou Starter",
+        "Priority access to live break signups",
+        "Monthly member discount code",
+        "Members-only singles previews",
+        "Collector support for wishlists"
+      ],
+      "bestFor": "Active TCG collectors who follow drops and breaks"
+    },
+    {
+      "id": "fleur-de-lis-elite",
+      "name": "Fleur-de-Lis Elite",
+      "price": "$79",
+      "cadence": "monthly",
+      "tag": "Premium",
+      "squareUrl": "",
+      "summary": "A premium collector service for curated finds, VIP access, and a higher-touch monthly experience.",
+      "features": [
+        "Everything in Lagniappe Club",
+        "Quarterly curated collector box",
+        "VIP event and trade-night access",
+        "Personal sourcing request queue",
+        "First look at rare sealed opportunities"
+      ],
+      "bestFor": "Serious collectors building a sharper collection"
+    }
+  ],
+  "shopLikeFeatures": [
+    {
+      "title": "Drop Calendar",
+      "copy": "A clean schedule for upcoming releases, member windows, live breaks, and trade nights."
+    },
+    {
+      "title": "Collector Wishlist",
+      "copy": "Members can use the wishlist planner to organize chase cards, sealed targets, and grading candidates."
+    },
+    {
+      "title": "Break Priority",
+      "copy": "Subscription tiers can receive priority reminders before public live break signups open."
+    },
+    {
+      "title": "Secure Checkout Redirects",
+      "copy": "Every subscription call-to-action sends traffic to your Square checkout link instead of collecting payment here."
+    }
+  ],
+  "calendar": [
+    {
+      "date": "June 7",
+      "type": "Trade Night",
+      "title": "Community trade table and collection review"
+    },
+    {
+      "date": "June 14",
+      "type": "Break Window",
+      "title": "Members receive first notice for the next live break"
+    },
+    {
+      "date": "June 21",
+      "type": "Drop Alert",
+      "title": "Sealed product and singles preview email"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Where do subscription payments happen?",
+      "answer": "All subscription buttons redirect to Square checkout links that you control."
+    },
+    {
+      "question": "Can I change the Square links later?",
+      "answer": "Yes. Update config/site.json and redeploy, or use the Admin helper to preview changes and export replacement JSON."
+    },
+    {
+      "question": "Does this GitHub Pages site store customer payment data?",
+      "answer": "No. This static webapp redirects to Square and does not process or store card data."
+    }
+  ]
+}
