@@ -194,7 +194,7 @@ function toBase64Utf8(value) {
 }
 
 async function githubRequest(path, options = {}) {
-  const token = $("#githubPublishToken").value.trim();
+  const token = ($("#githubPublishToken").value || $("#discordGithubPublishToken")?.value || "").trim();
   if (!token) throw new Error("Paste a GitHub publish token first.");
   const response = await fetch(`https://api.github.com/repos/${githubRepo}${path}`, {
     ...options,
@@ -270,6 +270,15 @@ $("#publishConfig").addEventListener("click", async () => {
     await publishConfig();
   } catch (error) {
     $("#adminMessage").textContent = `Publish failed: ${error.message}`;
+  }
+});
+
+$("#publishDiscordConfig").addEventListener("click", async () => {
+  try {
+    applyDropForm();
+    await publishConfig();
+  } catch (error) {
+    $("#adminMessage").textContent = `Discord publish failed: ${error.message}`;
   }
 });
 
