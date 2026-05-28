@@ -58,12 +58,28 @@ function applyBranding() {
   }
 }
 
+function buildCategoryFilter() {
+  const cats = [...new Set(products.map((p) => p.category).filter(Boolean))].sort();
+  const select = $("categoryFilter");
+  if (!select) return;
+  if (!cats.length) { select.hidden = true; return; }
+  select.innerHTML = `<option value="">All Categories</option>` +
+    cats.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+  select.hidden = false;
+}
+
 function buildSetFilter() {
-  const sets   = [...new Set(products.map((p) => p.setName).filter(Boolean))].sort();
+  const activeCat = $("categoryFilter")?.value || "";
+  const pool = activeCat ? products.filter((p) => (p.category || "") === activeCat) : products;
+  const sets = [...new Set(pool.map((p) => p.setName).filter(Boolean))].sort();
   const select = $("setFilter");
-  if (!select || !sets.length) return;
+  if (!select) return;
+  if (!sets.length) { select.hidden = true; select.value = ""; return; }
+  const current = select.value;
   select.innerHTML = `<option value="">All Sets</option>` +
     sets.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+  if (sets.includes(current)) select.value = current;
+  select.hidden = false;
 }
 
 function parsePrice(str) {
@@ -72,16 +88,20 @@ function parsePrice(str) {
 }
 
 function applyFilters() {
-  const search = ($("storeSearch")?.value || "").toLowerCase().trim();
-  const set    = $("setFilter")?.value || "";
-  const sort   = $("sortBy")?.value || "default";
+  const search   = ($("storeSearch")?.value || "").toLowerCase().trim();
+  const category = $("categoryFilter")?.value || "";
+  const set      = $("setFilter")?.value || "";
+  const sort     = $("sortBy")?.value || "default";
 
   filteredProducts = products.filter((p) => {
     const matchSearch = !search ||
       p.name.toLowerCase().includes(search) ||
-      (p.setName || "").toLowerCase().includes(search);
-    const matchSet = !set || p.setName === set;
-    return matchSearch && matchSet;
+      (p.setName   || "").toLowerCase().includes(search) ||
+      (p.category  || "").toLowerCase().includes(search) ||
+      (p.condition || "").toLowerCase().includes(search);
+    const matchCat = !category || (p.category || "") === category;
+    const matchSet = !set      || p.setName === set;
+    return matchSearch && matchCat && matchSet;
   });
 
   if (sort === "name")        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
@@ -113,6 +133,13 @@ function renderGrid() {
 
   grid.innerHTML = filteredProducts.map((p) => {
     const id = escapeHtml(p.id);
+    const metaParts = [
+      p.condition ? `<span class="product-meta-tag">${escapeHtml(p.condition)}</span>` : "",
+      p.rarity    ? `<span class="product-meta-tag">${escapeHtml(p.rarity)}</span>`    : "",
+      p.language && p.language.toLowerCase() !== "english"
+        ? `<span class="product-meta-tag">${escapeHtml(p.language)}</span>` : ""
+    ].filter(Boolean).join("");
+
     return `
       <article class="product-card" data-product-id="${id}">
         <div class="product-card-image">
@@ -125,8 +152,10 @@ function renderGrid() {
           <img id="img-${id}" alt="${escapeHtml(p.name)}" class="product-img" data-product-id="${id}">
         </div>
         <div class="product-card-body">
-          ${p.setName ? `<p class="product-card-set">${escapeHtml(p.setName)}</p>` : ""}
+          ${p.category ? `<p class="product-card-category">${escapeHtml(p.category)}</p>` : ""}
+          ${p.setName  ? `<p class="product-card-set">${escapeHtml(p.setName)}</p>` : ""}
           <h3 class="product-card-name">${escapeHtml(p.name)}</h3>
+          ${metaParts ? `<div class="product-card-meta">${metaParts}</div>` : ""}
           <div class="product-card-footer">
             <span class="product-card-price">${escapeHtml(p.price || "")}</span>
             ${p.squareUrl
@@ -243,11 +272,12 @@ document.addEventListener("click", (e) => {
 });
 
 $("storeSearch")?.addEventListener("input",  applyFilters);
+$("categoryFilter")?.addEventListener("change", () => { buildSetFilter(); applyFilters(); });
 $("setFilter")?.addEventListener("change",   applyFilters);
 $("sortBy")?.addEventListener("change",      applyFilters);
 
 loadData()
-  .then(() => { applyBranding(); buildSetFilter(); renderGrid(); })
+  .then(() => { applyBranding(); buildCategoryFilter(); buildSetFilter(); renderGrid(); })
   .catch((err) => {
     console.error(err);
     const grid = $("productGrid");

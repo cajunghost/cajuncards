@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Store — Cajun Cards &amp; Collectibles</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
@@ -45,7 +44,10 @@
             <input type="search" id="storeSearch" placeholder="Search cards, sets&hellip;" aria-label="Search products">
           </div>
           <div class="store-filter-wrap">
-            <select id="setFilter" aria-label="Filter by set">
+            <select id="categoryFilter" aria-label="Filter by category" hidden>
+              <option value="">All Categories</option>
+            </select>
+            <select id="setFilter" aria-label="Filter by set" hidden>
               <option value="">All Sets</option>
             </select>
             <select id="sortBy" aria-label="Sort products">
