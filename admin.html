@@ -76,6 +76,7 @@
           <button class="tab-btn"        data-tab="tiers"    role="tab" aria-selected="false">Tiers</button>
           <button class="tab-btn"        data-tab="square"   role="tab" aria-selected="false">Square</button>
           <button class="tab-btn"        data-tab="discord"  role="tab" aria-selected="false">Discord</button>
+          <button class="tab-btn"        data-tab="products" role="tab" aria-selected="false">Products</button>
           <button class="tab-btn"        data-tab="advanced" role="tab" aria-selected="false">Advanced</button>
         </div>
 
@@ -157,6 +158,31 @@
               <button class="button secondary" id="publishDiscord" type="button">Publish to GitHub</button>
             </div>
           </form>
+        </div>
+
+        <!-- ── Tab: Products ── -->
+        <div class="tab-pane" id="tab-products">
+          <div class="admin-grid">
+            <div class="admin-card">
+              <h3>Import Products via CSV</h3>
+              <p class="form-note">Upload a CSV with columns: <strong>Product Name</strong>, <strong>Set Name</strong>, and <strong>Price</strong>. Matching rows (same name + set) update in place; new rows are appended.</p>
+              <label>CSV File<input type="file" id="csvFileInput" accept=".csv,text/csv"></label>
+              <div class="button-row" style="margin-top:14px">
+                <button class="button secondary" id="importCsv" type="button">Import CSV</button>
+                <button class="button ghost" id="clearProducts" type="button">Clear All</button>
+              </div>
+              <p class="form-note" id="csvImportStatus" style="margin-top:10px;min-height:1.4em"></p>
+            </div>
+            <div class="admin-card">
+              <h3>Product Manager</h3>
+              <p class="form-note">Set a Square checkout URL for each product. Leave blank to show an &ldquo;Inquire&rdquo; button on the store instead.</p>
+              <div id="productManager"></div>
+              <div class="button-row" style="margin-top:16px">
+                <button class="button primary" id="publishProducts" type="button">Publish to GitHub</button>
+                <a class="button ghost" href="store.html" target="_blank" rel="noopener">View Store ↗</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- ── Tab: Advanced ── -->

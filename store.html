@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Store — Cajun Cards &amp; Collectibles</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <div class="announcement-strip" id="announcementStrip" hidden>
+      <div id="announcementTrack"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Cajun Cards &amp; Collectibles home">
+        <img src="assets/logo.svg" alt="">
+        <span>Cajun Cards &amp; Collectibles</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html#memberships">Memberships</a>
+        <a href="store.html" aria-current="page">Shop</a>
+      </nav>
+      <button class="button compact" id="openDiscordJoin" type="button">Join Discord</button>
+    </header>
+
+    <main>
+
+      <section class="store-hero">
+        <div class="store-hero-inner">
+          <p class="eyebrow">Cajun Cards &amp; Collectibles</p>
+          <h1>The Store</h1>
+          <p class="store-hero-sub">Browse our current selection of singles and sealed product.</p>
+        </div>
+      </section>
+
+      <section class="section store-section" id="products">
+        <div class="store-toolbar">
+          <div class="store-search-wrap">
+            <input type="search" id="storeSearch" placeholder="Search cards, sets&hellip;" aria-label="Search products">
+          </div>
+          <div class="store-filter-wrap">
+            <select id="setFilter" aria-label="Filter by set">
+              <option value="">All Sets</option>
+            </select>
+            <select id="sortBy" aria-label="Sort products">
+              <option value="default">Sort: Default</option>
+              <option value="name">Name: A&ndash;Z</option>
+              <option value="price-asc">Price: Low&ndash;High</option>
+              <option value="price-desc">Price: High&ndash;Low</option>
+            </select>
+          </div>
+        </div>
+        <p id="storeResultCount" class="store-result-count" aria-live="polite"></p>
+        <div id="productGrid" class="product-grid" aria-live="polite"></div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/logo.svg" alt="">
+          <div class="footer-brand-text">
+            <strong id="footerBrand">Cajun Cards &amp; Collectibles</strong>
+            <p id="footerTagline">A TCG collector club with Cajun character.</p>
+          </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-note">Payments are processed securely through Square. This site does not collect or store any payment information.</p>
+        <p class="footer-copy">&copy; <span id="footerCopyright">2026 Cajun Cards &amp; Collectibles. All rights reserved.</span></p>
+      </div>
+    </footer>
+
+    <aside class="join-tray" id="discordTray" aria-hidden="true" aria-label="Discord server invite">
+      <div class="tray-panel">
+        <div class="tray-header">
+          <h2>Join the Discord</h2>
+          <button class="icon-button" id="closeDiscordTray" type="button" aria-label="Close">&times;</button>
+        </div>
+        <p>Get online drop alerts, sealed access notices, and member updates from Cajun Cards &amp; Collectibles.</p>
+        <div class="secure-note">
+          <strong>Discord invite</strong>
+          <span id="discordJoinCopy">Add your Discord server link in the admin panel.</span>
+        </div>
+        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener">Open Discord</a>
+        <p class="form-note" id="discordTrayMessage"></p>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="store.js" type="module"></script>
+  </body>
+</html>
