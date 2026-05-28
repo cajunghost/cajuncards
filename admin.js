@@ -26,7 +26,7 @@ const $ = (id) => document.getElementById(id);
 const githubRepo   = "cajunghost/cajuncards";
 const githubBranch = "main";
 
-/* ─── Utility ─────────────────────────── */
+/* ─── Utility ──────────────────────────────── */
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 }
@@ -43,7 +43,7 @@ function toBase64Utf8(str) {
   return btoa(bin);
 }
 
-/* ─── Status messages ───────────────────── */
+/* ─── Status messages ──────────────────────── */
 function setStatus(message, type = "info") {
   const el = $("adminMessage");
   el.textContent = message;
@@ -59,7 +59,7 @@ function showToast(message) {
   window.setTimeout(() => toast.classList.remove("show"), 2800);
 }
 
-/* ─── Auth ─────────────────────────────── */
+/* ─── Auth ─────────────────────────────────── */
 function isUnlocked() { return sessionStorage.getItem("cajunAdminUnlocked") === "true"; }
 
 function setUnlocked(value) {
@@ -67,7 +67,7 @@ function setUnlocked(value) {
   else sessionStorage.removeItem("cajunAdminUnlocked");
 }
 
-/* ─── GitHub Token ─────────────────────── */
+/* ─── GitHub Token ─────────────────────────── */
 function getSavedToken() {
   return sessionStorage.getItem("cajunAdminPublishToken") || "";
 }
@@ -97,7 +97,7 @@ function getToken() {
   return getSavedToken() || $("githubPublishToken").value.trim();
 }
 
-/* ─── Config loading ────────────────────── */
+/* ─── Config loading ───────────────────────── */
 async function loadConfig() {
   const localOverride = localStorage.getItem("cajunSitePreviewConfig");
   const response = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
@@ -120,7 +120,7 @@ function savePreview() {
   localStorage.setItem("cajunSitePreviewConfig", JSON.stringify(config));
 }
 
-/* ─── Tab switching ──────────────────────── */
+/* ─── Tab switching ────────────────────────── */
 function initTabs() {
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -137,7 +137,7 @@ function initTabs() {
   });
 }
 
-/* ─── Announcement editor ────────────────── */
+/* ─── Announcement editor ──────────────────── */
 function renderAnnouncementEditor() {
   const items = config.announcements || [];
   const list = $("announcementList");
@@ -153,7 +153,7 @@ function renderAnnouncementEditor() {
   `).join("");
 }
 
-/* ─── Render admin forms ─────────────────── */
+/* ─── Render admin forms ───────────────────── */
 function renderAdmin() {
   const hero   = config.hero   || fallbackConfig.hero;
   const footer = config.footer || fallbackConfig.footer;
@@ -196,6 +196,7 @@ function renderAdmin() {
   $("jsonEditor").value = JSON.stringify(config, null, 2);
 
   /* Tab: Products */
+  renderCategoryManager();
   renderProductManager();
 }
 
@@ -278,7 +279,7 @@ function applyAllForms({ save = true } = {}) {
   if (save) savePreview();
 }
 
-/* ─── GitHub publishing ──────────────────── */
+/* ─── GitHub publishing ────────────────────── */
 async function githubRequest(path, options = {}) {
   const token = getToken();
   if (!token) throw new Error("No GitHub token. Save a token in the token box above.");
@@ -299,6 +300,7 @@ async function githubRequest(path, options = {}) {
 async function doPublish(label = "config") {
   setStatus(`Publishing ${label} to GitHub…`, "info");
 
+  // Embed a sentinel timestamp so we can detect when Pages has deployed
   config._publishedAt = new Date().toISOString();
   const publishTimestamp = config._publishedAt;
 
@@ -317,6 +319,7 @@ async function doPublish(label = "config") {
 
   setStatus("Published to GitHub. Waiting for the site to update…", "info");
 
+  // Poll the live URL (cache-busted) until the new config is confirmed deployed
   for (let attempt = 1; attempt <= 24; attempt++) {
     await new Promise((r) => setTimeout(r, 5000));
     try {
@@ -331,12 +334,40 @@ async function doPublish(label = "config") {
     setStatus(`Waiting for deployment… (${attempt * 5}s)`, "info");
   }
 
+  // Still published — just took longer than expected
   setStatus("Published. The site should reflect your changes within a couple of minutes.", "info");
   renderAdmin();
 }
 
-/* ─── Products ──────────────────────────── */
+/* ─── Products ──────────────────────────────── */
 let products = [];
+
+const COLUMN_ALIASES = {
+  name:      ["product name","card name","item name","item title","product title","title","item","card","singles","name"],
+  setName:   ["set name","set/expansion","card set","game set","set title","product line","expansion","collection","edition","series","set"],
+  price:     ["market price","tcgplayer price","tcg price","buy price","sell price","sale price","asking price","list price","retail price","our price","store price","low price","market low","cost","price","value"],
+  condition: ["card condition","item condition","grading","condition","quality","grade","cond"],
+  rarity:    ["card type","treatment","printing","variant","finish","rarity","rare","foil","holo"],
+  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","available","inventory","copies","stock"],
+  sku:       ["product id","item id","catalog #","product #","card number","card #","item #","upc","barcode","number","sku","id"],
+  language:  ["edition language","language","lang"],
+  notes:     ["additional info","description","details","comments","comment","notes","note"]
+};
+
+const COLUMN_MAP = Object.entries(COLUMN_ALIASES)
+  .flatMap(([field, aliases]) => aliases.map((alias) => [alias, field]))
+  .sort((a, b) => b[0].length - a[0].length);
+
+function matchColumn(rawHeader) {
+  const h = rawHeader.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+  for (const [alias, field] of COLUMN_MAP) {
+    if (h === alias) return field;
+  }
+  for (const [alias, field] of COLUMN_MAP) {
+    if (alias.length >= 4 && h.includes(alias)) return field;
+  }
+  return null;
+}
 
 async function loadProducts() {
   const res = await fetch(`config/products.json?t=${Date.now()}`, { cache: "no-store" });
@@ -344,8 +375,8 @@ async function loadProducts() {
   products = Array.isArray(data.products) ? data.products : [];
 }
 
-function makeProductId(name, setName) {
-  return `${name}${setName ? `-${setName}` : ""}`
+function makeProductId(name, setName, category) {
+  return `${category ? category + "-" : ""}${name}${setName ? `-${setName}` : ""}`
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
@@ -371,27 +402,63 @@ function parseCSVRow(row) {
   return cells;
 }
 
-function parseCSVText(text) {
+function parseCSVText(text, category) {
   const lines = text.split(/\r?\n/).filter((l) => l.trim());
   if (!lines.length) return [];
-  const headers = parseCSVRow(lines[0]).map((h) => h.toLowerCase().replace(/\s+/g, " ").trim());
+  const rawHeaders = parseCSVRow(lines[0]);
+  const fieldMap = rawHeaders.map((h) => matchColumn(h));
 
-  const nameIdx  = headers.findIndex((h) => h === "product name" || h === "name");
-  const setIdx   = headers.findIndex((h) => h === "set name"     || h === "set");
-  const priceIdx = headers.findIndex((h) => h === "price");
-
-  if (nameIdx === -1) throw new Error('CSV must have a "Product Name" or "Name" column.');
+  if (!fieldMap.includes("name")) {
+    throw new Error('CSV must have a product name column (e.g. "Product Name", "Name", "Card Name", "Item", "Title").');
+  }
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
-    const cells   = parseCSVRow(lines[i]);
-    const name    = cells[nameIdx]?.trim() || "";
-    const setName = setIdx   >= 0 ? (cells[setIdx]?.trim()   || "") : "";
-    const price   = priceIdx >= 0 ? (cells[priceIdx]?.trim() || "") : "";
-    if (!name) continue;
-    rows.push({ name, setName, price });
+    const cells = parseCSVRow(lines[i]);
+    const product = { category: category || "" };
+    fieldMap.forEach((field, idx) => {
+      if (field && cells[idx] !== undefined) product[field] = cells[idx].trim();
+    });
+    if (!product.name) continue;
+    rows.push(product);
   }
   return rows;
+}
+
+function getCategories() {
+  const seen = new Set();
+  const cats = [];
+  for (const p of products) {
+    const c = p.category || "";
+    if (!seen.has(c)) { seen.add(c); cats.push(c); }
+  }
+  return cats;
+}
+
+function renderCategoryManager() {
+  const el = $("categoryManager");
+  if (!el) return;
+  const cats = getCategories();
+  if (!cats.length) {
+    el.innerHTML = `<p class="product-admin-empty">No categories yet — import a CSV above.</p>`;
+    const label = $("productCountLabel");
+    if (label) label.textContent = "";
+    return;
+  }
+  el.innerHTML = `<div class="category-list">` + cats.map((c) => {
+    const count = products.filter((p) => (p.category || "") === c).length;
+    const label = c || "(Uncategorised)";
+    return `
+      <div class="category-row">
+        <span class="category-row-name">${escapeHtml(label)}</span>
+        <span class="category-row-count">${count} product${count !== 1 ? "s" : ""}</span>
+        <button class="button ghost" type="button" data-delete-category="${escapeHtml(c)}"
+          style="min-height:30px;padding:3px 10px;font-size:0.78rem">Delete</button>
+      </div>
+    `;
+  }).join("") + `</div>`;
+  const label = $("productCountLabel");
+  if (label) label.textContent = `(${products.length})`;
 }
 
 function renderProductManager() {
@@ -408,6 +475,7 @@ function renderProductManager() {
       <table class="product-admin-table">
         <thead>
           <tr>
+            <th>Category</th>
             <th>Product</th>
             <th>Set</th>
             <th>Price</th>
@@ -418,6 +486,7 @@ function renderProductManager() {
         <tbody>
           ${products.map((p, i) => `
             <tr>
+              <td class="td-cat">${escapeHtml(p.category || "—")}</td>
               <td class="td-name" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</td>
               <td class="td-set">${escapeHtml(p.setName || "—")}</td>
               <td class="td-price">${escapeHtml(p.price || "—")}</td>
@@ -478,6 +547,7 @@ async function doPublishProducts() {
       const live = res.ok ? await res.json() : null;
       if (live?._publishedAt === publishTimestamp) {
         setStatus("Products are live on the store!", "success");
+        renderCategoryManager();
         renderProductManager();
         return;
       }
@@ -486,10 +556,11 @@ async function doPublishProducts() {
   }
 
   setStatus("Published. The store should reflect your changes within a couple of minutes.", "info");
+  renderCategoryManager();
   renderProductManager();
 }
 
-/* ─── Download config ────────────────────── */
+/* ─── Download config ──────────────────────── */
 function downloadConfig() {
   const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
   const url  = URL.createObjectURL(blob);
@@ -498,7 +569,7 @@ function downloadConfig() {
   URL.revokeObjectURL(url);
 }
 
-/* ─── Event listeners ────────────────────── */
+/* ─── Event listeners ──────────────────────── */
 
 /* Login */
 $("adminLoginForm").addEventListener("submit", async (e) => {
@@ -687,41 +758,37 @@ $("passwordForm").addEventListener("submit", async (e) => {
 $("importCsv").addEventListener("click", async () => {
   const file     = $("csvFileInput")?.files?.[0];
   const statusEl = $("csvImportStatus");
-  if (!file) { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
+  const category = ($("csvCategory")?.value || "").trim();
+
+  if (!category) { if (statusEl) statusEl.textContent = "Enter a category name before importing."; return; }
+  if (!file)     { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
 
   try {
     const text     = await file.text();
-    const imported = parseCSVText(text);
+    const imported = parseCSVText(text, category);
     if (!imported.length) { if (statusEl) statusEl.textContent = "No valid rows found in the CSV."; return; }
 
     let added = 0, updated = 0;
     for (const row of imported) {
-      const id  = makeProductId(row.name, row.setName);
+      const id  = makeProductId(row.name, row.setName, row.category);
       const idx = products.findIndex((p) => p.id === id);
       if (idx >= 0) {
-        products[idx] = { ...products[idx], name: row.name, setName: row.setName, price: row.price };
+        products[idx] = { ...products[idx], ...row, squareUrl: products[idx].squareUrl || "" };
         updated++;
       } else {
-        products.push({ id, name: row.name, setName: row.setName, price: row.price, squareUrl: "", imageUrl: "" });
+        products.push({ id, squareUrl: "", imageUrl: "", ...row });
         added++;
       }
     }
 
     if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated. Click Publish to save.`;
-    renderProductManager();
+    $("csvCategory").value = "";
     $("csvFileInput").value = "";
+    renderCategoryManager();
+    renderProductManager();
   } catch (err) {
     if (statusEl) statusEl.textContent = `Error: ${err.message}`;
   }
-});
-
-$("clearProducts").addEventListener("click", () => {
-  if (!products.length) return;
-  if (!confirm("Clear all products? This won't take effect until you click Publish.")) return;
-  products = [];
-  renderProductManager();
-  const statusEl = $("csvImportStatus");
-  if (statusEl) statusEl.textContent = "All products cleared. Click Publish to save.";
 });
 
 $("publishProducts").addEventListener("click", async () => {
@@ -732,13 +799,40 @@ $("publishProducts").addEventListener("click", async () => {
   }
 });
 
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-remove-product]");
-  if (!btn) return;
-  const i = parseInt(btn.dataset.removeProduct, 10);
-  collectProductSquareUrls();
-  products = products.filter((_, idx) => idx !== i);
+$("wipeProducts").addEventListener("click", async () => {
+  if (!confirm("Wipe ALL products and redeploy? This cannot be undone.")) return;
+  products = [];
+  renderCategoryManager();
   renderProductManager();
+  try {
+    await doPublishProducts();
+    setStatus("All products wiped and redeployed.", "success");
+  } catch (err) {
+    setStatus(`Wipe failed: ${err.message}`, "error");
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const removeBtn = e.target.closest("[data-remove-product]");
+  if (removeBtn) {
+    const i = parseInt(removeBtn.dataset.removeProduct, 10);
+    collectProductSquareUrls();
+    products = products.filter((_, idx) => idx !== i);
+    renderCategoryManager();
+    renderProductManager();
+    return;
+  }
+  const deleteBtn = e.target.closest("[data-delete-category]");
+  if (deleteBtn) {
+    const cat = deleteBtn.dataset.deleteCategory;
+    const label = cat || "(Uncategorised)";
+    const count = products.filter((p) => (p.category || "") === cat).length;
+    if (!confirm(`Delete category "${label}" and its ${count} product${count !== 1 ? "s" : ""}? Click Publish to save.`)) return;
+    collectProductSquareUrls();
+    products = products.filter((p) => (p.category || "") !== cat);
+    renderCategoryManager();
+    renderProductManager();
+  }
 });
 
 /* Logout */
@@ -747,7 +841,7 @@ $("adminLogout").addEventListener("click", () => {
   renderAuthState();
 });
 
-/* ─── Init ────────────────────────────────── */
+/* ─── Init ──────────────────────────────────── */
 Promise.all([loadConfig(), loadProducts()])
   .then(() => {
     renderAuthState();
