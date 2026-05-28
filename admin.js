@@ -758,10 +758,10 @@ $("passwordForm").addEventListener("submit", async (e) => {
 $("importCsv").addEventListener("click", async () => {
   const file     = $("csvFileInput")?.files?.[0];
   const statusEl = $("csvImportStatus");
-  const category = ($("csvCategory")?.value || "").trim();
+  if (!file) { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
 
-  if (!category) { if (statusEl) statusEl.textContent = "Enter a category name before importing."; return; }
-  if (!file)     { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
+  const rawCat   = ($("csvCategory")?.value || "").trim();
+  const category = rawCat || file.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim() || "Imported";
 
   try {
     const text     = await file.text();
@@ -781,8 +781,8 @@ $("importCsv").addEventListener("click", async () => {
       }
     }
 
-    if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated. Click Publish to save.`;
-    $("csvCategory").value = "";
+    if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated under "${category}". Click Publish to save.`;
+    if ($("csvCategory")) $("csvCategory").value = "";
     $("csvFileInput").value = "";
     renderCategoryManager();
     renderProductManager();
