@@ -1477,3 +1477,211 @@ code {
     grid-template-columns: 1fr;
   }
 }
+
+/* ════════════════════════════════════════════
+   Featured Cards Popup
+   ════════════════════════════════════════════ */
+.featured-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+.featured-popup.open { display: flex; }
+
+.featured-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 13, 9, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.featured-popup-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  border: 1px solid rgba(200, 148, 48, 0.35);
+  border-radius: 20px;
+  padding: 36px 28px 28px;
+  max-width: 400px;
+  width: calc(100% - 32px);
+  text-align: center;
+  box-shadow: 0 32px 96px rgba(16, 13, 9, 0.45), 0 0 0 1px rgba(200,148,48,0.15);
+  animation: popupIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes popupIn {
+  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+.featured-popup-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: none; border: none;
+  font-size: 1.7rem; line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.featured-popup-close:hover {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.featured-popup-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 4px;
+}
+
+.featured-popup-title {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 22px;
+  letter-spacing: 0.03em;
+}
+
+/* ── 3-D Wheel ─────────────────────────────── */
+.card-wheel-scene {
+  perspective: 900px;
+  perspective-origin: 50% 45%;
+  height: 310px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 -8px 18px;
+}
+
+.card-wheel {
+  width: 170px;
+  height: 238px;
+  margin: 18px auto 0;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wheel-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 8px 40px rgba(16,13,9,0.35), 0 0 0 1px rgba(16,13,9,0.08);
+}
+.wheel-card:nth-child(1) { transform: rotateY(  0deg) translateZ(210px); }
+.wheel-card:nth-child(2) { transform: rotateY(120deg) translateZ(210px); }
+.wheel-card:nth-child(3) { transform: rotateY(240deg) translateZ(210px); }
+
+.wheel-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Fallback card faces when images cannot load */
+.wheel-card-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fallback-pokemon  { background: linear-gradient(150deg, #b71c1c 0%, #e65100 100%); }
+.fallback-onepiece { background: linear-gradient(150deg, #880e4f 0%, #bf360c 100%); }
+.fallback-lorcana  { background: linear-gradient(150deg, #1a237e 0%, #6a1b9a 100%); }
+
+/* ── Card Info ─────────────────────────────── */
+.wheel-info {
+  min-height: 78px;
+  margin: 0 0 14px;
+}
+
+.wheel-info-slide {
+  display: none;
+  animation: fadeUp 0.3s ease both;
+}
+.wheel-info-slide.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wheel-game-badge {
+  display: inline-block;
+  padding: 2px 11px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 7px;
+}
+.pokemon-badge  {
+  background: rgba(201, 10, 10, 0.1);
+  color: #b71c1c;
+  border: 1px solid rgba(201, 10, 10, 0.25);
+}
+.onepiece-badge {
+  background: rgba(180, 80, 0, 0.1);
+  color: #bf360c;
+  border: 1px solid rgba(180, 80, 0, 0.25);
+}
+.lorcana-badge {
+  background: rgba(74, 20, 140, 0.1);
+  color: #6a1b9a;
+  border: 1px solid rgba(74, 20, 140, 0.25);
+}
+
+.wheel-card-name {
+  font-family: var(--display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 3px;
+}
+.wheel-card-value {
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── Navigation dots ───────────────────────── */
+.wheel-dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.wheel-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+  border: 1px solid rgba(16,13,9,0.2);
+  cursor: pointer; padding: 0;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+}
+.wheel-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: scale(1.3);
+}
+.wheel-dot:hover:not(.active) {
+  background: rgba(200, 148, 48, 0.35);
+}
+
+.featured-store-btn {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
