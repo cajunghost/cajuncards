@@ -369,6 +369,32 @@ function matchColumn(rawHeader) {
   return null;
 }
 
+function detectSeparator(firstLine) {
+  const counts = { ",": 0, "\t": 0, ";": 0, "|": 0 };
+  let inQ = false;
+  for (const ch of firstLine) {
+    if (ch === '"') inQ = !inQ;
+    if (!inQ && ch in counts) counts[ch]++;
+  }
+  return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+}
+
+function detectColumnByValue(samples) {
+  const nonempty = samples.filter(Boolean);
+  if (!nonempty.length) return null;
+  if (nonempty.every((s) => /^\$?[\d,]+(\.\d{1,2})?$/.test(s.trim()))) return "price";
+  if (nonempty.some((s) => /^(nm|lp|mp|hp|dmg|near mint|lightly played|moderately played|heavily played|damaged|poor)\b/i.test(s.trim()))) return "condition";
+  if (nonempty.some((s) => /^(common|uncommon|rare|holo|mythic|legendary|ultra rare|secret rare|promo)\b/i.test(s.trim()))) return "rarity";
+  return null;
+}
+
+function normalizePrice(raw) {
+  if (!raw) return "";
+  const num = parseFloat(raw.replace(/[$,\s]/g, ""));
+  if (isNaN(num)) return raw.trim();
+  return num % 1 === 0 ? `$${num}` : `$${num.toFixed(2)}`;
+}
+
 async function loadProducts() {
   const res = await fetch(`config/products.json?t=${Date.now()}`, { cache: "no-store" });
   const data = res.ok ? await res.json() : {};
@@ -382,7 +408,7 @@ function makeProductId(name, setName, category) {
     .replace(/^-+|-+$/g, "");
 }
 
-function parseCSVRow(row) {
+function parseCSVRow(row, sep = ",") {
   const cells = [];
   let current = "";
   let inQuotes = false;
@@ -391,7 +417,7 @@ function parseCSVRow(row) {
     if (ch === '"') {
       if (inQuotes && row[i + 1] === '"') { current += '"'; i++; }
       else inQuotes = !inQuotes;
-    } else if (ch === "," && !inQuotes) {
+    } else if (ch === sep && !inQuotes) {
       cells.push(current.trim());
       current = "";
     } else {
@@ -403,21 +429,34 @@ function parseCSVRow(row) {
 }
 
 function parseCSVText(text, category) {
-  const lines = text.split(/\r?\n/).filter((l) => l.trim());
+  // Strip BOM that Excel / Google Sheets sometimes prepends
+  const clean = text.replace(/^\uFEFF/, "");
+  const lines = clean.split(/\r?\n/).filter((l) => l.trim());
   if (!lines.length) return [];
-  const rawHeaders = parseCSVRow(lines[0]);
+
+  const sep = detectSeparator(lines[0]);
+  const rawHeaders = parseCSVRow(lines[0], sep);
   const fieldMap = rawHeaders.map((h) => matchColumn(h));
 
-  if (!fieldMap.includes("name")) {
-    throw new Error('CSV must have a product name column (e.g. "Product Name", "Name", "Card Name", "Item", "Title").');
+  // Sample up to 5 data rows so unrecognised columns can be typed by value
+  const samples = rawHeaders.map(() => []);
+  for (let i = 1; i < Math.min(6, lines.length); i++) {
+    parseCSVRow(lines[i], sep).forEach((c, idx) => { if (samples[idx]) samples[idx].push(c.trim()); });
   }
+
+  // Merge header-match with value-based inference; column 0 is always the name
+  const finalMap = fieldMap.map((field, i) => field || detectColumnByValue(samples[i]));
+  if (!finalMap.includes("name")) finalMap[0] = "name";
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
-    const cells = parseCSVRow(lines[i]);
+    const cells = parseCSVRow(lines[i], sep);
     const product = { category: category || "" };
-    fieldMap.forEach((field, idx) => {
-      if (field && cells[idx] !== undefined) product[field] = cells[idx].trim();
+    finalMap.forEach((field, idx) => {
+      if (field && cells[idx] !== undefined && cells[idx].trim()) {
+        const val = cells[idx].trim();
+        product[field] = field === "price" ? normalizePrice(val) : val;
+      }
     });
     if (!product.name) continue;
     rows.push(product);
@@ -510,11 +549,23 @@ function renderProductManager() {
   `;
 }
 
+function isSafeUrl(url) {
+  if (!url) return true;
+  return /^https:\/\//i.test(url);
+}
+
 function collectProductSquareUrls() {
   document.querySelectorAll("[data-product-idx]").forEach((input) => {
     const idx = parseInt(input.dataset.productIdx, 10);
     if (!isNaN(idx) && products[idx]) {
-      products[idx].squareUrl = input.value.trim();
+      const url = input.value.trim();
+      if (url && !isSafeUrl(url)) {
+        input.setCustomValidity("Square URLs must start with https://");
+        input.reportValidity();
+        return;
+      }
+      input.setCustomValidity("");
+      products[idx].squareUrl = url;
     }
   });
 }
@@ -758,10 +809,10 @@ $("passwordForm").addEventListener("submit", async (e) => {
 $("importCsv").addEventListener("click", async () => {
   const file     = $("csvFileInput")?.files?.[0];
   const statusEl = $("csvImportStatus");
-  const category = ($("csvCategory")?.value || "").trim();
+  if (!file) { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
 
-  if (!category) { if (statusEl) statusEl.textContent = "Enter a category name before importing."; return; }
-  if (!file)     { if (statusEl) statusEl.textContent = "Select a CSV file first."; return; }
+  const rawCat   = ($("csvCategory")?.value || "").trim();
+  const category = rawCat || file.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim() || "Imported";
 
   try {
     const text     = await file.text();
@@ -781,8 +832,8 @@ $("importCsv").addEventListener("click", async () => {
       }
     }
 
-    if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated. Click Publish to save.`;
-    $("csvCategory").value = "";
+    if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated under "${category}". Click Publish to save.`;
+    if ($("csvCategory")) $("csvCategory").value = "";
     $("csvFileInput").value = "";
     renderCategoryManager();
     renderProductManager();

@@ -67,6 +67,7 @@ function getPath(path) {
 }
 
 async function loadConfig() {
+  // ?t= cache-busts the GitHub Pages CDN so changes appear immediately after publish
   const response = await fetch(`config/site.json?t=${Date.now()}`, { cache: "no-store" });
   config = response.ok ? await response.json() : fallbackConfig;
 }
@@ -146,7 +147,8 @@ function openTray(tier) {
   $("trayCopy").textContent = tier.squareUrl
     ? `${tier.name} will open in Square checkout.`
     : `${tier.name} needs a Square checkout link — contact the admin.`;
-  $("squareCheckoutLink").href = tier.squareUrl || "#memberships";
+  const safeSquareUrl = tier.squareUrl && /^https:\/\//i.test(tier.squareUrl) ? tier.squareUrl : null;
+  $("squareCheckoutLink").href = safeSquareUrl || "#memberships";
   $("squareCheckoutLink").textContent = tier.squareUrl ? "Continue to Square" : "Square link coming soon";
   $("trayMessage").textContent = tier.squareUrl ? "" : "This tier needs a Square link before it can send traffic.";
   $("joinTray").classList.add("open");

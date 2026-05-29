@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.scryfall.com https://cards.scryfall.io https://images.pokemontcg.io; connect-src 'self' https://api.scryfall.com https://api.pokemontcg.io; frame-ancestors 'none'; base-uri 'self'; form-action 'none'">
     <title>Store — Cajun Cards &amp; Collectibles</title>
-<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
@@ -90,7 +91,7 @@
           <strong>Discord invite</strong>
           <span id="discordJoinCopy">Add your Discord server link in the admin panel.</span>
         </div>
-        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener">Open Discord</a>
+        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener noreferrer">Open Discord</a>
         <p class="form-note" id="discordTrayMessage"></p>
       </div>
     </aside>

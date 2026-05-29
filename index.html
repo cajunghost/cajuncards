@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'">
     <title>Cajun Cards &amp; Collectibles</title>
     <meta name="description" id="metaDesc" content="Subscription memberships for Cajun Cards &amp; Collectibles — a TCG collector club in Louisiana.">
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
@@ -38,7 +39,7 @@
             <p id="dropMessage"></p>
             <span class="drop-time" id="dropPostedAt"></span>
           </div>
-          <a class="button primary" id="dropLink" target="_blank" rel="noopener" hidden>View on Discord</a>
+          <a class="button primary" id="dropLink" target="_blank" rel="noopener noreferrer" hidden>View on Discord</a>
         </div>
       </div>
 
@@ -96,7 +97,7 @@
           <strong>Redirecting to Square</strong>
           <span>Payment is completed through your Square checkout link.</span>
         </div>
-        <a class="button primary full" id="squareCheckoutLink" target="_blank" rel="noopener">Continue to Square</a>
+        <a class="button primary full" id="squareCheckoutLink" target="_blank" rel="noopener noreferrer">Continue to Square</a>
         <button class="button ghost full" id="copySquareLink" type="button">Copy Square link</button>
         <p class="form-note" id="trayMessage"></p>
       </div>
@@ -113,7 +114,7 @@
           <strong>Discord invite</strong>
           <span id="discordJoinCopy">Add your Discord server link in the admin panel.</span>
         </div>
-        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener">Open Discord</a>
+        <a class="button primary full" id="discordServerLink" target="_blank" rel="noopener noreferrer">Open Discord</a>
         <p class="form-note" id="discordTrayMessage"></p>
       </div>
     </aside>
