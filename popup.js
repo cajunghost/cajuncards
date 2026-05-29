@@ -1,5 +1,6 @@
 (function () {
-  if (sessionStorage.getItem("cajun_featured_seen")) return;
+  const bypass = new URLSearchParams(location.search).has("popup");
+  if (!bypass && sessionStorage.getItem("cajun_featured_seen")) return;
 
   const CARDS = [
     {
@@ -146,7 +147,7 @@
   function close() {
     popup.classList.remove("open");
     clearInterval(timer);
-    sessionStorage.setItem("cajun_featured_seen", "1");
+    if (!bypass) sessionStorage.setItem("cajun_featured_seen", "1");
     document.removeEventListener("keydown", onKey);
   }
 
