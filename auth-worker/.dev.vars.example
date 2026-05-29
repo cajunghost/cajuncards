@@ -1,0 +1,6 @@
+# Copy this file to .dev.vars for local development with `wrangler dev`.
+# .dev.vars is gitignored — never commit real secrets.
+
+ADMIN_USERNAME=CajunGamers
+ADMIN_PASSWORD_HASH=5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c
+JWT_SECRET=replace-with-at-least-32-random-characters-here

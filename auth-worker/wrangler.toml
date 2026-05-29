@@ -1,0 +1,29 @@
+name              = "cajuncards-auth"
+main              = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# ── KV namespace ────────────────────────────────────────────────────────────
+# After creating the namespace (`wrangler kv namespace create AUTH_KV`),
+# paste the returned IDs below.
+[[kv_namespaces]]
+binding    = "AUTH_KV"
+id         = "REPLACE_WITH_KV_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_KV_PREVIEW_NAMESPACE_ID"
+
+# ── Public env vars ──────────────────────────────────────────────────────────
+# Comma-separated list of allowed CORS origins.
+# Include your GitHub Pages URL and any custom domain.
+[vars]
+ALLOWED_ORIGIN = "https://cajunghost.github.io"
+
+# ── Secrets (never put real values here) ────────────────────────────────────
+# Set each one with:
+#   wrangler secret put ADMIN_USERNAME
+#   wrangler secret put ADMIN_PASSWORD_HASH
+#   wrangler secret put JWT_SECRET
+#
+# ADMIN_USERNAME       — your admin login name (e.g. CajunGamers)
+# ADMIN_PASSWORD_HASH  — SHA-256 hex of your initial admin password
+#                        Generate: echo -n 'yourpassword' | sha256sum
+# JWT_SECRET           — ≥32 random characters
+#                        Generate: openssl rand -base64 48

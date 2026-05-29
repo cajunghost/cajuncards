@@ -16,8 +16,7 @@
     "secondaryCta": "Join Discord"
   },
   "admin": {
-    "username": "CajunGamers",
-    "passwordHash": "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
+    "authUrl": "https://cajuncards-auth.YOUR-CF-SUBDOMAIN.workers.dev"
   },
   "announcements": [
     "Payments powered by Square",

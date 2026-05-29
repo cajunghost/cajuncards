@@ -26,6 +26,9 @@ desktop.ini
 *.log
 npm-debug.log*
 
+# Cloudflare Workers local dev secrets (never commit real creds)
+auth-worker/.dev.vars
+
 # Build artefacts (none today, but guard for the future)
 dist/
 build/

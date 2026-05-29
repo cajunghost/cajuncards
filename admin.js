@@ -2,10 +2,7 @@ const fallbackConfig = {
   brand: "Cajun Cards & Collectibles",
   meta: { description: "" },
   footer: { tagline: "A TCG collector club with Cajun character.", copyright: "2026 Cajun Cards & Collectibles. All rights reserved." },
-  admin: {
-    username: "CajunGamers",
-    passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
-  },
+  admin: { authUrl: "" },
   hero: {
     eyebrow: "Collector memberships with Cajun character",
     headline: "Cajun Cards & Collectibles",
@@ -60,11 +57,33 @@ function showToast(message) {
 }
 
 /* ─── Auth ─────────────────────────────────── */
-function isUnlocked() { return sessionStorage.getItem("cajunAdminUnlocked") === "true"; }
+function getAuthWorkerUrl() {
+  return (config.admin?.authUrl || "").trim();
+}
 
-function setUnlocked(value) {
-  if (value) sessionStorage.setItem("cajunAdminUnlocked", "true");
-  else sessionStorage.removeItem("cajunAdminUnlocked");
+function jwtPayload(token) {
+  try {
+    const [, body] = (token || "").split(".");
+    return JSON.parse(atob(body.replace(/-/g, "+").replace(/_/g, "/")));
+  } catch {
+    return null;
+  }
+}
+
+function isUnlocked() {
+  const token = sessionStorage.getItem("cajunAdminJwt");
+  if (!token) return false;
+  const p = jwtPayload(token);
+  return p && p.exp > Math.floor(Date.now() / 1000);
+}
+
+function setUnlocked(token) {
+  if (token) {
+    sessionStorage.setItem("cajunAdminJwt", token);
+  } else {
+    sessionStorage.removeItem("cajunAdminJwt");
+    sessionStorage.removeItem("cajunAdminUnlocked"); // remove legacy key
+  }
 }
 
 /* ─── GitHub Token ─────────────────────────── */
@@ -628,17 +647,41 @@ $("adminLoginForm").addEventListener("submit", async (e) => {
   const data     = new FormData(e.target);
   const username = String(data.get("username") || "").trim();
   const password = String(data.get("password") || "");
-  const expUser  = config.admin?.username || fallbackConfig.admin.username;
-  const expHash  = config.admin?.passwordHash || fallbackConfig.admin.passwordHash;
-  if (username.toLowerCase() === expUser.toLowerCase() && await sha256(password) === expHash) {
-    setUnlocked(true);
-    e.target.reset();
-    $("loginMessage").textContent = "";
-    renderAuthState();
-    initTabs();
+  const msgEl    = $("loginMessage");
+  const btn      = e.target.querySelector("button[type=submit]");
+  const workerUrl = getAuthWorkerUrl();
+
+  if (!workerUrl) {
+    msgEl.textContent = "Auth worker not configured. See auth-worker/ in the repository.";
     return;
   }
-  $("loginMessage").textContent = "Login failed.";
+
+  btn.disabled = true;
+  msgEl.textContent = "Verifying…";
+
+  try {
+    const res  = await fetch(`${workerUrl}/api/auth/login`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ username, password }),
+    });
+    const body = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      msgEl.textContent = body.error || "Login failed.";
+      return;
+    }
+
+    setUnlocked(body.token);
+    e.target.reset();
+    msgEl.textContent = "";
+    renderAuthState();
+    initTabs();
+  } catch {
+    msgEl.textContent = "Could not reach the auth server. Check your connection.";
+  } finally {
+    btn.disabled = false;
+  }
 });
 
 /* Token save */
@@ -780,28 +823,39 @@ $("downloadConfig").addEventListener("click", downloadConfig);
 /* Tab: Advanced — Password change */
 $("passwordForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const current  = $("currentPassword").value;
-  const next     = $("newPassword").value;
-  const confirm  = $("confirmPassword").value;
-  const msgEl    = $("passwordMessage");
+  const current = $("currentPassword").value;
+  const next    = $("newPassword").value;
+  const confirm = $("confirmPassword").value;
+  const msgEl   = $("passwordMessage");
+  const btn     = e.target.querySelector("button[type=submit]");
+  const workerUrl = getAuthWorkerUrl();
 
   if (!current || !next || !confirm) { msgEl.textContent = "Fill in all three fields."; return; }
   if (next !== confirm)              { msgEl.textContent = "New passwords don't match."; return; }
   if (next.length < 12)              { msgEl.textContent = "New password must be at least 12 characters."; return; }
+  if (!workerUrl)                    { msgEl.textContent = "Auth worker not configured."; return; }
 
-  const expHash = config.admin?.passwordHash || fallbackConfig.admin.passwordHash;
-  const currentHash = await sha256(current);
-  if (currentHash !== expHash) { msgEl.textContent = "Current password is incorrect."; return; }
+  btn.disabled = true;
+  msgEl.textContent = "Saving…";
 
   try {
-    const newHash = await sha256(next);
-    config.admin  = { ...(config.admin || fallbackConfig.admin), passwordHash: newHash };
-    await doPublish("admin password");
+    const token = sessionStorage.getItem("cajunAdminJwt") || "";
+    const res   = await fetch(`${workerUrl}/api/auth/change-password`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body:    JSON.stringify({ currentPassword: current, newPassword: next }),
+    });
+    const body = await res.json().catch(() => ({}));
+
+    if (!res.ok) { msgEl.textContent = body.error || "Failed to change password."; return; }
+
     e.target.reset();
-    msgEl.textContent = "Password changed and published.";
+    msgEl.textContent = "Password changed successfully.";
     window.setTimeout(() => { msgEl.textContent = ""; }, 5000);
   } catch (err) {
     msgEl.textContent = `Failed: ${err.message}`;
+  } finally {
+    btn.disabled = false;
   }
 });
 
