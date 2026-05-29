@@ -348,9 +348,10 @@ const COLUMN_ALIASES = {
   price:     ["market price","tcgplayer price","tcg price","buy price","sell price","sale price","asking price","list price","retail price","our price","store price","low price","market low","cost","price","value"],
   condition: ["card condition","item condition","grading","condition","quality","grade","cond"],
   rarity:    ["card type","treatment","printing","variant","finish","rarity","rare","foil","holo"],
-  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","available","inventory","copies","stock"],
+  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","total","available","inventory","copies","stock"],
   sku:       ["product id","item id","catalog #","product #","card number","card #","item #","upc","barcode","number","sku","id"],
   language:  ["edition language","language","lang"],
+  imageUrl:  ["image url","card image","img url","image link","photo url","thumbnail","image","photo","img"],
   notes:     ["additional info","description","details","comments","comment","notes","note"]
 };
 
@@ -444,9 +445,20 @@ function parseCSVText(text, category) {
     parseCSVRow(lines[i], sep).forEach((c, idx) => { if (samples[idx]) samples[idx].push(c.trim()); });
   }
 
-  // Merge header-match with value-based inference; column 0 is always the name
+  // Merge header-match with value-based inference
   const finalMap = fieldMap.map((field, i) => field || detectColumnByValue(samples[i]));
-  if (!finalMap.includes("name")) finalMap[0] = "name";
+  if (!finalMap.includes("name")) {
+    // Use the first unmapped column — never stomp a column that's already typed
+    // (e.g. a "Quantity" column in position 0 should stay quantity, not become name)
+    const freeIdx = finalMap.findIndex((f) => !f);
+    if (freeIdx !== -1) {
+      finalMap[freeIdx] = "name";
+    } else {
+      // Every column already has a type; fall back to overriding sku (weakest for display)
+      const skuIdx = finalMap.indexOf("sku");
+      finalMap[skuIdx !== -1 ? skuIdx : 0] = "name";
+    }
+  }
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
