@@ -7,6 +7,11 @@
       name: "Charizard — Base Set 1st Edition",
       value: "~$420,000 PSA 10",
       img:  "https://images.pokemontcg.io/base1/4_hires.png",
+      imgFallbacks: [
+        "https://images.pokemontcg.io/base1/4.png",
+        "https://images.pokemontcg.io/base1/2_hires.png",
+        "https://images.pokemontcg.io/base1/2.png",
+      ],
       alt:  "Charizard Base Set 1st Edition Pokémon card",
       badge: "pokemon-badge",
       fallback: "fallback-pokemon",
@@ -16,6 +21,11 @@
       name: "Shanks — OP01-120 Secret Rare",
       value: "~$1,200 Raw",
       img:  "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
+      imgFallbacks: [
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120.png",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-119_p1.png",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-119.png",
+      ],
       alt:  "Shanks OP01-120 Secret Rare One Piece card",
       badge: "onepiece-badge",
       fallback: "fallback-onepiece",
@@ -25,6 +35,11 @@
       name: "Elsa — Spirit of Winter (Enchanted)",
       value: "~$500 Raw",
       img:  "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
+      imgFallbacks: [
+        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.webp",
+        "https://lorcana-api.com/images/EN/Maleficent_-_Monstrous_Dragon.png",
+        "https://lorcana-api.com/images/EN/Maleficent_-_Monstrous_Dragon.webp",
+      ],
       alt:  "Elsa Spirit of Winter Enchanted Disney Lorcana card",
       badge: "lorcana-badge",
       fallback: "fallback-lorcana",
@@ -43,15 +58,18 @@
     <div class="featured-popup-backdrop" id="featuredBackdrop"></div>
     <div class="featured-popup-panel">
       <button class="featured-popup-close" id="featuredPopupClose" aria-label="Close">&times;</button>
-      <p class="featured-popup-eyebrow">High-Value Showcase</p>
-      <h2 class="featured-popup-title" id="featuredPopupTitle">Featured Cards</h2>
+      <p class="featured-popup-eyebrow">We Carry These Games</p>
+      <h2 class="featured-popup-title" id="featuredPopupTitle">Pokémon &middot; One Piece &middot; Lorcana &amp; More</h2>
+      <p class="featured-popup-intro">From Base Set Charizards to Secret Rare Shanks, we buy, sell, and break the cards you care about. Here&rsquo;s a look at some of the high-value singles in our world.</p>
 
       <div class="card-wheel-scene" aria-hidden="true">
         <div class="card-wheel" id="cardWheel">
           ${CARDS.map((c, i) => `
             <div class="wheel-card" data-idx="${i}">
-              <img src="${c.img}" alt="${c.alt}" class="wheel-card-img"
-                   onerror="this.style.display='none';this.closest('.wheel-card').classList.add('wheel-card-fallback','${c.fallback}')">
+              <img src="${c.img}"
+                   data-fallbacks="${(c.imgFallbacks || []).join('|')}"
+                   data-fallback-class="${c.fallback}"
+                   alt="${c.alt}" class="wheel-card-img">
             </div>
           `).join("")}
         </div>
@@ -81,6 +99,20 @@
   `;
 
   document.body.appendChild(popup);
+
+  /* ── Image fallback chain ── */
+  popup.querySelectorAll(".wheel-card-img").forEach((img) => {
+    const queue = (img.dataset.fallbacks || "").split("|").filter(Boolean);
+    let idx = 0;
+    img.addEventListener("error", () => {
+      if (idx < queue.length) {
+        img.src = queue[idx++];
+      } else {
+        img.style.display = "none";
+        img.closest(".wheel-card").classList.add("wheel-card-fallback", img.dataset.fallbackClass);
+      }
+    });
+  });
 
   /* ── Controls ── */
   const wheel  = popup.querySelector("#cardWheel");
