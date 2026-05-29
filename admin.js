@@ -4,7 +4,7 @@ const fallbackConfig = {
   footer: { tagline: "A TCG collector club with Cajun character.", copyright: "2026 Cajun Cards & Collectibles. All rights reserved." },
   admin: {
     username: "CajunGamers",
-    passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
+    passwordHash: "43f1ae02431ec4a75b0bc6524e16d9ee8f694ba99443aa0cb53a92975145b11e"
   },
   hero: {
     eyebrow: "Collector memberships with Cajun character",

@@ -41,10 +41,7 @@ https://cajunghost.github.io/
 
 Open `/admin.html` directly. It is not linked from the public site.
 
-Default helper login:
-
-- Username: `CajunGamers`
-- Password: `CajunGamers!2026#BayouVault`
+Login credentials are not stored in this repository. Contact the site owner for access.
 
 The helper lets you paste/edit Square links or JSON, preview it locally in the browser, and export a replacement `site.json`. Because GitHub Pages is static, saving permanent site-wide changes still requires committing the updated `config/site.json`.
 
