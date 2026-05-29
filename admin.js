@@ -348,7 +348,7 @@ const COLUMN_ALIASES = {
   price:     ["market price","tcgplayer price","tcg price","buy price","sell price","sale price","asking price","list price","retail price","our price","store price","low price","market low","cost","price","value"],
   condition: ["card condition","item condition","grading","condition","quality","grade","cond"],
   rarity:    ["card type","treatment","printing","variant","finish","rarity","rare","foil","holo"],
-  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","total","available","inventory","copies","stock"],
+  quantity:  ["qty available","qty in stock","add to quantity","available qty","qty","quantity","in stock","count","total","available","inventory","copies","stock"],
   sku:       ["product id","item id","catalog #","product #","card number","card #","item #","upc","barcode","number","sku","id"],
   language:  ["edition language","language","lang"],
   imageUrl:  ["image url","card image","img url","image link","photo url","thumbnail","image","photo","img"],
@@ -381,11 +381,24 @@ function detectSeparator(firstLine) {
 }
 
 function detectColumnByValue(samples) {
-  const nonempty = samples.filter(Boolean);
-  if (!nonempty.length) return null;
-  if (nonempty.every((s) => /^\$?[\d,]+(\.\d{1,2})?$/.test(s.trim()))) return "price";
-  if (nonempty.some((s) => /^(nm|lp|mp|hp|dmg|near mint|lightly played|moderately played|heavily played|damaged|poor)\b/i.test(s.trim()))) return "condition";
-  if (nonempty.some((s) => /^(common|uncommon|rare|holo|mythic|legendary|ultra rare|secret rare|promo)\b/i.test(s.trim()))) return "rarity";
+  const v = samples.filter(Boolean).map((s) => s.trim()).filter(Boolean);
+  if (!v.length) return null;
+  const pct = (fn) => v.filter(fn).length / v.length;
+
+  // Dollar sign or explicit decimal cents → price  ($9.99, 9.99)
+  if (v.every((s) => /^\$[\d,]*\.?\d+$|^[\d,]+\.\d{2}$/.test(s))) return "price";
+  // Pure small integers with no decimals → quantity  (1, 50, 100)
+  if (v.every((s) => /^\d{1,6}$/.test(s))) return "quantity";
+  // HTTP/S links → imageUrl
+  if (v.every((s) => /^https?:\/\//i.test(s))) return "imageUrl";
+  // Majority of values are condition grades
+  if (pct((s) => /^(nm|lp|mp|hp|dmg|near\s*mint|lightly\s*played|moderately\s*played|heavily\s*played|damaged|poor)(\W|$)/i.test(s)) >= 0.5) return "condition";
+  // Majority of values are rarity terms
+  if (pct((s) => /^(common|uncommon|rare|holo|mythic|legendary|ultra\s*rare|secret\s*rare|promo)(\W|$)/i.test(s)) >= 0.5) return "rarity";
+  // Short codes that contain at least one digit → card numbers / SKU  (001/152, SWSH001, V-1)
+  if (v.every((s) => /^[A-Za-z0-9]{1,12}([\/\-][A-Za-z0-9]+)?$/.test(s) && /\d/.test(s) && s.length <= 12)) return "sku";
+  // Mostly multi-word or long letter-starting strings → product names
+  if (pct((s) => /^[A-Za-z]/.test(s) && (s.includes(" ") || s.length > 10)) >= 0.6) return "name";
   return null;
 }
 
@@ -430,7 +443,6 @@ function parseCSVRow(row, sep = ",") {
 }
 
 function parseCSVText(text, category) {
-  // Strip BOM that Excel / Google Sheets sometimes prepends
   const clean = text.replace(/^\uFEFF/, "");
   const lines = clean.split(/\r?\n/).filter((l) => l.trim());
   if (!lines.length) return [];
@@ -439,36 +451,43 @@ function parseCSVText(text, category) {
   const rawHeaders = parseCSVRow(lines[0], sep);
   const fieldMap = rawHeaders.map((h) => matchColumn(h));
 
-  // Sample up to 5 data rows so unrecognised columns can be typed by value
+  // Sample up to 8 data rows so value-based inference has enough signal
   const samples = rawHeaders.map(() => []);
-  for (let i = 1; i < Math.min(6, lines.length); i++) {
+  for (let i = 1; i < Math.min(9, lines.length); i++) {
     parseCSVRow(lines[i], sep).forEach((c, idx) => { if (samples[idx]) samples[idx].push(c.trim()); });
   }
 
   // Merge header-match with value-based inference
   const finalMap = fieldMap.map((field, i) => field || detectColumnByValue(samples[i]));
+
+  // Ensure a name column exists: prefer first free slot; last resort override sku
+  // (never override quantity/price -- that caused the "number of cards" name bug)
   if (!finalMap.includes("name")) {
-    // Use the first unmapped column — never stomp a column that's already typed
-    // (e.g. a "Quantity" column in position 0 should stay quantity, not become name)
     const freeIdx = finalMap.findIndex((f) => !f);
     if (freeIdx !== -1) {
       finalMap[freeIdx] = "name";
     } else {
-      // Every column already has a type; fall back to overriding sku (weakest for display)
       const skuIdx = finalMap.indexOf("sku");
       finalMap[skuIdx !== -1 ? skuIdx : 0] = "name";
     }
   }
 
+  // Log resolved map to browser console so mismatches are easy to diagnose
+  console.debug("[CSV] sep=%o headers=%o map=%o", sep, rawHeaders, finalMap);
+
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
     const cells = parseCSVRow(lines[i], sep);
     const product = { category: category || "" };
+    // First-write-wins per field: the first column mapped to "name" wins,
+    // so a later duplicate (e.g. TCGPlayer "Title" after "Product Name") is ignored
+    const written = new Set();
     finalMap.forEach((field, idx) => {
-      if (field && cells[idx] !== undefined && cells[idx].trim()) {
-        const val = cells[idx].trim();
-        product[field] = field === "price" ? normalizePrice(val) : val;
-      }
+      if (!field || written.has(field)) return;
+      const val = cells[idx]?.trim();
+      if (!val) return;
+      written.add(field);
+      product[field] = field === "price" ? normalizePrice(val) : val;
     });
     if (!product.name) continue;
     rows.push(product);
