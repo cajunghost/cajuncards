@@ -2,7 +2,10 @@ const fallbackConfig = {
   brand: "Cajun Cards & Collectibles",
   meta: { description: "" },
   footer: { tagline: "A TCG collector club with Cajun character.", copyright: "2026 Cajun Cards & Collectibles. All rights reserved." },
-  admin: { authUrl: "" },
+  admin: {
+    username: "CajunGamers",
+    passwordHash: "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
+  },
   hero: {
     eyebrow: "Collector memberships with Cajun character",
     headline: "Cajun Cards & Collectibles",
@@ -57,33 +60,11 @@ function showToast(message) {
 }
 
 /* ─── Auth ─────────────────────────────────── */
-function getAuthWorkerUrl() {
-  return (config.admin?.authUrl || "").trim();
-}
+function isUnlocked() { return sessionStorage.getItem("cajunAdminUnlocked") === "true"; }
 
-function jwtPayload(token) {
-  try {
-    const [, body] = (token || "").split(".");
-    return JSON.parse(atob(body.replace(/-/g, "+").replace(/_/g, "/")));
-  } catch {
-    return null;
-  }
-}
-
-function isUnlocked() {
-  const token = sessionStorage.getItem("cajunAdminJwt");
-  if (!token) return false;
-  const p = jwtPayload(token);
-  return p && p.exp > Math.floor(Date.now() / 1000);
-}
-
-function setUnlocked(token) {
-  if (token) {
-    sessionStorage.setItem("cajunAdminJwt", token);
-  } else {
-    sessionStorage.removeItem("cajunAdminJwt");
-    sessionStorage.removeItem("cajunAdminUnlocked"); // remove legacy key
-  }
+function setUnlocked(value) {
+  if (value) sessionStorage.setItem("cajunAdminUnlocked", "true");
+  else sessionStorage.removeItem("cajunAdminUnlocked");
 }
 
 /* ─── GitHub Token ─────────────────────────── */
@@ -367,9 +348,10 @@ const COLUMN_ALIASES = {
   price:     ["market price","tcgplayer price","tcg price","buy price","sell price","sale price","asking price","list price","retail price","our price","store price","low price","market low","cost","price","value"],
   condition: ["card condition","item condition","grading","condition","quality","grade","cond"],
   rarity:    ["card type","treatment","printing","variant","finish","rarity","rare","foil","holo"],
-  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","available","inventory","copies","stock"],
+  quantity:  ["qty available","qty in stock","available qty","qty","quantity","in stock","count","total","available","inventory","copies","stock"],
   sku:       ["product id","item id","catalog #","product #","card number","card #","item #","upc","barcode","number","sku","id"],
   language:  ["edition language","language","lang"],
+  imageUrl:  ["image url","card image","img url","image link","photo url","thumbnail","image","photo","img"],
   notes:     ["additional info","description","details","comments","comment","notes","note"]
 };
 
@@ -463,9 +445,20 @@ function parseCSVText(text, category) {
     parseCSVRow(lines[i], sep).forEach((c, idx) => { if (samples[idx]) samples[idx].push(c.trim()); });
   }
 
-  // Merge header-match with value-based inference; column 0 is always the name
+  // Merge header-match with value-based inference
   const finalMap = fieldMap.map((field, i) => field || detectColumnByValue(samples[i]));
-  if (!finalMap.includes("name")) finalMap[0] = "name";
+  if (!finalMap.includes("name")) {
+    // Use the first unmapped column — never stomp a column that's already typed
+    // (e.g. a "Quantity" column in position 0 should stay quantity, not become name)
+    const freeIdx = finalMap.findIndex((f) => !f);
+    if (freeIdx !== -1) {
+      finalMap[freeIdx] = "name";
+    } else {
+      // Every column already has a type; fall back to overriding sku (weakest for display)
+      const skuIdx = finalMap.indexOf("sku");
+      finalMap[skuIdx !== -1 ? skuIdx : 0] = "name";
+    }
+  }
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
@@ -647,41 +640,17 @@ $("adminLoginForm").addEventListener("submit", async (e) => {
   const data     = new FormData(e.target);
   const username = String(data.get("username") || "").trim();
   const password = String(data.get("password") || "");
-  const msgEl    = $("loginMessage");
-  const btn      = e.target.querySelector("button[type=submit]");
-  const workerUrl = getAuthWorkerUrl();
-
-  if (!workerUrl) {
-    msgEl.textContent = "Auth worker not configured. See auth-worker/ in the repository.";
-    return;
-  }
-
-  btn.disabled = true;
-  msgEl.textContent = "Verifying…";
-
-  try {
-    const res  = await fetch(`${workerUrl}/api/auth/login`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ username, password }),
-    });
-    const body = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      msgEl.textContent = body.error || "Login failed.";
-      return;
-    }
-
-    setUnlocked(body.token);
+  const expUser  = config.admin?.username || fallbackConfig.admin.username;
+  const expHash  = config.admin?.passwordHash || fallbackConfig.admin.passwordHash;
+  if (username.toLowerCase() === expUser.toLowerCase() && await sha256(password) === expHash) {
+    setUnlocked(true);
     e.target.reset();
-    msgEl.textContent = "";
+    $("loginMessage").textContent = "";
     renderAuthState();
     initTabs();
-  } catch {
-    msgEl.textContent = "Could not reach the auth server. Check your connection.";
-  } finally {
-    btn.disabled = false;
+    return;
   }
+  $("loginMessage").textContent = "Login failed.";
 });
 
 /* Token save */
@@ -823,39 +792,28 @@ $("downloadConfig").addEventListener("click", downloadConfig);
 /* Tab: Advanced — Password change */
 $("passwordForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const current = $("currentPassword").value;
-  const next    = $("newPassword").value;
-  const confirm = $("confirmPassword").value;
-  const msgEl   = $("passwordMessage");
-  const btn     = e.target.querySelector("button[type=submit]");
-  const workerUrl = getAuthWorkerUrl();
+  const current  = $("currentPassword").value;
+  const next     = $("newPassword").value;
+  const confirm  = $("confirmPassword").value;
+  const msgEl    = $("passwordMessage");
 
   if (!current || !next || !confirm) { msgEl.textContent = "Fill in all three fields."; return; }
   if (next !== confirm)              { msgEl.textContent = "New passwords don't match."; return; }
   if (next.length < 12)              { msgEl.textContent = "New password must be at least 12 characters."; return; }
-  if (!workerUrl)                    { msgEl.textContent = "Auth worker not configured."; return; }
 
-  btn.disabled = true;
-  msgEl.textContent = "Saving…";
+  const expHash = config.admin?.passwordHash || fallbackConfig.admin.passwordHash;
+  const currentHash = await sha256(current);
+  if (currentHash !== expHash) { msgEl.textContent = "Current password is incorrect."; return; }
 
   try {
-    const token = sessionStorage.getItem("cajunAdminJwt") || "";
-    const res   = await fetch(`${workerUrl}/api/auth/change-password`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-      body:    JSON.stringify({ currentPassword: current, newPassword: next }),
-    });
-    const body = await res.json().catch(() => ({}));
-
-    if (!res.ok) { msgEl.textContent = body.error || "Failed to change password."; return; }
-
+    const newHash = await sha256(next);
+    config.admin  = { ...(config.admin || fallbackConfig.admin), passwordHash: newHash };
+    await doPublish("admin password");
     e.target.reset();
-    msgEl.textContent = "Password changed successfully.";
+    msgEl.textContent = "Password changed and published.";
     window.setTimeout(() => { msgEl.textContent = ""; }, 5000);
   } catch (err) {
     msgEl.textContent = `Failed: ${err.message}`;
-  } finally {
-    btn.disabled = false;
   }
 });
 

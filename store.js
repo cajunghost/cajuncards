@@ -215,23 +215,31 @@ function applyImage(productId, url) {
 }
 
 async function resolveImage(product) {
-  const [mtg, poke] = await Promise.allSettled([
-    fetchScryfall(product.name),
-    fetchPokemon(product.name, product.setName)
-  ]);
-  return (mtg.status === "fulfilled" && mtg.value)
-    || (poke.status === "fulfilled" && poke.value)
-    || null;
+  const hint = `${product.category || ""} ${product.setName || ""}`.toLowerCase();
+  const isPokemon = /pokemon|pok[eé]mon|ptcg|pocket/i.test(hint);
+  const isMTG = /\bmtg\b|magic|commander|gathering|wizards/i.test(hint);
+
+  if (isPokemon) return fetchPokemon(product.name, product.setName);
+  if (isMTG) return fetchScryfall(product.name, product.setName);
+
+  // Unknown game — try Scryfall first (no set hint to avoid false positives), then Pokemon
+  const mtgUrl = await fetchScryfall(product.name);
+  if (mtgUrl) return mtgUrl;
+  return fetchPokemon(product.name, product.setName);
 }
 
-async function fetchScryfall(name) {
-  const res = await fetch(
-    `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`,
-    { headers: { "Accept": "application/json" } }
-  );
+async function fetchScryfall(name, setName) {
+  let url;
+  if (setName) {
+    url = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(`!"${name}" s:"${setName}"`)}&unique=cards`;
+  } else {
+    url = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`;
+  }
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
   if (!res.ok) return null;
   const d = await res.json();
-  return d.image_uris?.normal || d.card_faces?.[0]?.image_uris?.normal || null;
+  const card = setName ? d.data?.[0] : d;
+  return card?.image_uris?.normal || card?.card_faces?.[0]?.image_uris?.normal || null;
 }
 
 async function fetchPokemon(name, setName) {
