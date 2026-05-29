@@ -16,7 +16,7 @@
     "secondaryCta": "Join Discord"
   },
   "admin": {
-    "authUrl": "https://cajuncards-auth.YOUR-CF-SUBDOMAIN.workers.dev"
+    "authUrl": "https://cajuncards-auth.jcmumph.workers.dev"
   },
   "announcements": [
     "Payments powered by Square",
