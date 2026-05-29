@@ -120,6 +120,10 @@ h3 {
   flex-shrink: 0;
 }
 
+.site-header .brand img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(200,148,48,.55));
+}
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -342,23 +346,24 @@ h3 {
 .hero-mark::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(200,148,48,.55), transparent 50%, rgba(200,148,48,.22));
+  inset: -2px;
+  border-radius: 17px;
+  background: linear-gradient(135deg, var(--purple) 0%, var(--gold) 50%, var(--purple-dark) 100%);
   z-index: -1;
+  opacity: 0.75;
 }
 
 .hero-mark img {
   width: 100%;
-  max-width: 220px;
+  max-width: 240px;
   aspect-ratio: 1;
   object-fit: contain;
-  filter: drop-shadow(0 8px 28px rgba(23,19,15,.2));
+  filter: drop-shadow(0 4px 16px rgba(109,40,217,.25)) drop-shadow(0 8px 32px rgba(200,148,48,.18));
 }
 
 @keyframes floatMark {
-  0%, 100% { transform: translateY(0); box-shadow: var(--shadow-lg), 0 0 0 5px rgba(200,148,48,.07); }
-  50%       { transform: translateY(-12px); box-shadow: 0 22px 60px rgba(23,19,15,.18), 0 6px 20px rgba(23,19,15,.09), 0 0 0 5px rgba(200,148,48,.1); }
+  0%, 100% { transform: translateY(0); box-shadow: var(--shadow-lg), 0 0 0 5px rgba(200,148,48,.07), 0 0 40px rgba(109,40,217,.12); }
+  50%       { transform: translateY(-12px); box-shadow: 0 22px 60px rgba(23,19,15,.18), 0 6px 20px rgba(23,19,15,.09), 0 0 0 5px rgba(200,148,48,.12), 0 0 60px rgba(109,40,217,.18); }
 }
 
 /* ─── Discord Drop Notification ─────── */
