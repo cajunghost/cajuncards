@@ -16,8 +16,7 @@
     "secondaryCta": "Join Discord"
   },
   "admin": {
-    "username": "CajunGamers",
-    "passwordHash": "5b2371cd0a4d0e10ac35d80642f1366a730165ff8c55253541ce53491453935c"
+    "authUrl": "https://cajuncards-auth.jcmumph.workers.dev"
   },
   "announcements": [
     "Payments powered by Square",
@@ -25,7 +24,7 @@
     "Subscribe today to gain access to our exclusive launch day - coming soon!"
   ],
   "discordDrop": {
-    "enabled": true,
+    "enabled": false,
     "title": "Discord drop notifications",
     "message": "Join the Cajun Cards Discord for the next live drop alert.",
     "discordUrl": "",
