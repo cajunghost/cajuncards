@@ -443,25 +443,21 @@ function parseCSVRow(row, sep = ",") {
 }
 
 function parseCSVText(text, category) {
-  const clean = text.replace(/^\uFEFF/, "");
+  const clean = text.replace(/^﻿/, "");
   const lines = clean.split(/\r?\n/).filter((l) => l.trim());
-  if (!lines.length) return [];
+  if (!lines.length) return { rows: [], priceColumns: [] };
 
   const sep = detectSeparator(lines[0]);
   const rawHeaders = parseCSVRow(lines[0], sep);
   const fieldMap = rawHeaders.map((h) => matchColumn(h));
 
-  // Sample up to 8 data rows so value-based inference has enough signal
   const samples = rawHeaders.map(() => []);
   for (let i = 1; i < Math.min(9, lines.length); i++) {
     parseCSVRow(lines[i], sep).forEach((c, idx) => { if (samples[idx]) samples[idx].push(c.trim()); });
   }
 
-  // Merge header-match with value-based inference
   const finalMap = fieldMap.map((field, i) => field || detectColumnByValue(samples[i]));
 
-  // Ensure a name column exists: prefer first free slot; last resort override sku
-  // (never override quantity/price -- that caused the "number of cards" name bug)
   if (!finalMap.includes("name")) {
     const freeIdx = finalMap.findIndex((f) => !f);
     if (freeIdx !== -1) {
@@ -472,27 +468,43 @@ function parseCSVText(text, category) {
     }
   }
 
-  // Log resolved map to browser console so mismatches are easy to diagnose
-  console.debug("[CSV] sep=%o headers=%o map=%o", sep, rawHeaders, finalMap);
+  // Collect all price column headers so the picker can show options
+  const priceColumns = finalMap
+    .map((field, i) => (field === "price" ? (rawHeaders[i] || `Price ${i + 1}`) : null))
+    .filter(Boolean);
+
+  console.debug("[CSV] sep=%o headers=%o map=%o prices=%o", sep, rawHeaders, finalMap, priceColumns);
 
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
     const cells = parseCSVRow(lines[i], sep);
     const product = { category: category || "" };
-    // First-write-wins per field: the first column mapped to "name" wins,
-    // so a later duplicate (e.g. TCGPlayer "Title" after "Product Name") is ignored
     const written = new Set();
+    const prices = {};
+
     finalMap.forEach((field, idx) => {
-      if (!field || written.has(field)) return;
+      if (!field) return;
       const val = cells[idx]?.trim();
       if (!val) return;
+      if (field === "price") {
+        const header = rawHeaders[idx] || `Price ${idx + 1}`;
+        prices[header] = normalizePrice(val);
+        if (!written.has("price")) {
+          written.add("price");
+          product.price = normalizePrice(val); // default: first detected price column
+        }
+        return;
+      }
+      if (written.has(field)) return;
       written.add(field);
-      product[field] = field === "price" ? normalizePrice(val) : val;
+      product[field] = val;
     });
+
+    if (priceColumns.length > 1) product._prices = prices;
     if (!product.name) continue;
     rows.push(product);
   }
-  return rows;
+  return { rows, priceColumns };
 }
 
 function getCategories() {
@@ -605,7 +617,8 @@ async function doPublishProducts() {
   collectProductSquareUrls();
   setStatus("Publishing products to GitHub…", "info");
 
-  const payload = { products, _publishedAt: new Date().toISOString() };
+  const cleanProducts = products.map(({ _prices, ...p }) => p);
+  const payload = { products: cleanProducts, _publishedAt: new Date().toISOString() };
   const publishTimestamp = payload._publishedAt;
 
   const filePath = "config/products.json";
@@ -837,6 +850,33 @@ $("passwordForm").addEventListener("submit", async (e) => {
 });
 
 /* Tab: Products — CSV import */
+let pendingImport = null;
+
+function confirmImport(rows, category) {
+  let added = 0, updated = 0;
+  for (const row of rows) {
+    const { _prices, ...cleanRow } = row;
+    const id  = makeProductId(cleanRow.name, cleanRow.setName, cleanRow.category);
+    const idx = products.findIndex((p) => p.id === id);
+    if (idx >= 0) {
+      products[idx] = { ...products[idx], ...cleanRow, squareUrl: products[idx].squareUrl || "" };
+      updated++;
+    } else {
+      products.push({ id, squareUrl: "", imageUrl: "", ...cleanRow });
+      added++;
+    }
+  }
+  const statusEl = $("csvImportStatus");
+  if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated under "${category}". Click Publish to save.`;
+  if ($("csvCategory")) $("csvCategory").value = "";
+  const fi = $("csvFileInput"); if (fi) fi.value = "";
+  $("pricePickerSection").classList.add("hidden");
+  $("confirmImportBtn").classList.add("hidden");
+  pendingImport = null;
+  renderCategoryManager();
+  renderProductManager();
+}
+
 $("importCsv").addEventListener("click", async () => {
   const file     = $("csvFileInput")?.files?.[0];
   const statusEl = $("csvImportStatus");
@@ -846,31 +886,39 @@ $("importCsv").addEventListener("click", async () => {
   const category = rawCat || file.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim() || "Imported";
 
   try {
-    const text     = await file.text();
-    const imported = parseCSVText(text, category);
-    if (!imported.length) { if (statusEl) statusEl.textContent = "No valid rows found in the CSV."; return; }
+    const text = await file.text();
+    const { rows, priceColumns } = parseCSVText(text, category);
+    if (!rows.length) { if (statusEl) statusEl.textContent = "No valid rows found in the CSV."; return; }
 
-    let added = 0, updated = 0;
-    for (const row of imported) {
-      const id  = makeProductId(row.name, row.setName, row.category);
-      const idx = products.findIndex((p) => p.id === id);
-      if (idx >= 0) {
-        products[idx] = { ...products[idx], ...row, squareUrl: products[idx].squareUrl || "" };
-        updated++;
-      } else {
-        products.push({ id, squareUrl: "", imageUrl: "", ...row });
-        added++;
-      }
+    if (priceColumns.length > 1) {
+      pendingImport = { rows, category, priceColumns };
+      const select = $("priceColumnSelect");
+      select.innerHTML = priceColumns.map((col) => {
+        const sample = rows.find((r) => r._prices?.[col])?._prices[col] || "";
+        return `<option value="${escapeHtml(col)}">${escapeHtml(col)}${sample ? ` — ${escapeHtml(sample)}` : ""}</option>`;
+      }).join("");
+      $("pricePickerSection").classList.remove("hidden");
+      $("confirmImportBtn").classList.remove("hidden");
+      if (statusEl) statusEl.textContent = `Found ${rows.length} products with ${priceColumns.length} price columns. Pick which to display, then click Confirm Import.`;
+    } else {
+      confirmImport(rows, category);
     }
-
-    if (statusEl) statusEl.textContent = `Done — ${added} added, ${updated} updated under "${category}". Click Publish to save.`;
-    if ($("csvCategory")) $("csvCategory").value = "";
-    $("csvFileInput").value = "";
-    renderCategoryManager();
-    renderProductManager();
   } catch (err) {
     if (statusEl) statusEl.textContent = `Error: ${err.message}`;
   }
+});
+
+$("priceColumnSelect").addEventListener("change", () => {
+  if (!pendingImport) return;
+  const col = $("priceColumnSelect").value;
+  pendingImport.rows.forEach((row) => {
+    if (row._prices?.[col]) row.price = row._prices[col];
+  });
+});
+
+$("confirmImportBtn").addEventListener("click", () => {
+  if (!pendingImport) return;
+  confirmImport(pendingImport.rows, pendingImport.category);
 });
 
 $("publishProducts").addEventListener("click", async () => {
