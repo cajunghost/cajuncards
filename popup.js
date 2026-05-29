@@ -2,53 +2,138 @@
   const bypass = new URLSearchParams(location.search).has("popup");
   if (!bypass && sessionStorage.getItem("cajun_featured_seen")) return;
 
-  const CARDS = [
-    {
-      game: "Pokémon",
-      name: "Charizard — Base Set 1st Edition",
-      value: "~$420,000 PSA 10",
-      /* Pokemon TCG API: open CORS, no hotlink protection */
-      img: "https://images.pokemontcg.io/base1/4_hires.png",
-      imgFallbacks: [
-        "https://images.pokemontcg.io/base1/4.png",
-        "https://images.pokemontcg.io/base1/2_hires.png",
-        "https://images.pokemontcg.io/base1/2.png",
-      ],
-      alt:  "Charizard Base Set 1st Edition Pokémon card",
-      badge: "pokemon-badge",
-      fallback: "fallback-pokemon",
-    },
-    {
-      game: "One Piece",
-      name: "Shanks — OP01-120 Secret Rare",
-      value: "~$1,200 Raw",
-      /* Limitless TCG CDN: permissive CORS, no hotlink protection */
-      img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.webp",
-      imgFallbacks: [
-        "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_p1_EN.webp",
-        "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01-120_EN.webp",
-        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
-      ],
-      alt:  "Shanks OP01-120 Secret Rare One Piece card",
-      badge: "onepiece-badge",
-      fallback: "fallback-onepiece",
-    },
-    {
-      game: "Lorcana",
-      name: "Elsa — Spirit of Winter (Enchanted)",
-      value: "~$500 Raw",
-      /* Lorcana community API: open CORS */
-      img: "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
-      imgFallbacks: [
-        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.png",
-        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.webp",
-        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.webp",
-      ],
-      alt:  "Elsa Spirit of Winter Enchanted Disney Lorcana card",
-      badge: "lorcana-badge",
-      fallback: "fallback-lorcana",
-    },
+  /* ── Card pools — one card picked at random from each pool on every load ── */
+  const POOLS = [
+
+    /* ── Pokémon ── */
+    [
+      {
+        game: "Pokémon",
+        name: "Charizard ex — Special Illustration Rare",
+        value: "~$150 NM · Pokémon 151",
+        img: "https://images.pokemontcg.io/sv3pt5/207_hires.png",
+        imgFallbacks: [
+          "https://images.pokemontcg.io/sv3pt5/207.png",
+          "https://images.pokemontcg.io/base1/4_hires.png",
+          "https://images.pokemontcg.io/base1/4.png",
+        ],
+        alt: "Charizard ex Special Illustration Rare from Pokémon 151",
+        badge: "pokemon-badge", fallback: "fallback-pokemon",
+      },
+      {
+        game: "Pokémon",
+        name: "Umbreon VMAX — Alternate Art",
+        value: "~$250 NM · Evolving Skies",
+        img: "https://images.pokemontcg.io/swsh7/215_hires.png",
+        imgFallbacks: [
+          "https://images.pokemontcg.io/swsh7/215.png",
+          "https://images.pokemontcg.io/sv3pt5/207_hires.png",
+          "https://images.pokemontcg.io/sv3pt5/207.png",
+        ],
+        alt: "Umbreon VMAX Alternate Art from Evolving Skies",
+        badge: "pokemon-badge", fallback: "fallback-pokemon",
+      },
+      {
+        game: "Pokémon",
+        name: "Pikachu ex — Special Illustration Rare",
+        value: "~$160 NM · Prismatic Evolutions",
+        img: "https://images.pokemontcg.io/sv8pt5/161_hires.png",
+        imgFallbacks: [
+          "https://images.pokemontcg.io/sv8pt5/161.png",
+          "https://images.pokemontcg.io/base1/4_hires.png",
+          "https://images.pokemontcg.io/base1/4.png",
+        ],
+        alt: "Pikachu ex Special Illustration Rare from Prismatic Evolutions",
+        badge: "pokemon-badge", fallback: "fallback-pokemon",
+      },
+    ],
+
+    /* ── One Piece ── */
+    [
+      {
+        game: "One Piece",
+        name: "Monkey D. Luffy — OP01-120 Secret Rare",
+        value: "~$275 NM · Romance Dawn",
+        img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.webp",
+        imgFallbacks: [
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_p1_EN.webp",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120.png",
+        ],
+        alt: "Monkey D. Luffy OP01-120 Secret Rare One Piece card",
+        badge: "onepiece-badge", fallback: "fallback-onepiece",
+      },
+      {
+        game: "One Piece",
+        name: "Portgas D. Ace — OP02-013 Secret Rare",
+        value: "~$300 NM · Paramount War",
+        img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_EN.webp",
+        imgFallbacks: [
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_p1_EN.webp",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013_p1.png",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013.png",
+        ],
+        alt: "Portgas D. Ace OP02-013 Secret Rare One Piece card",
+        badge: "onepiece-badge", fallback: "fallback-onepiece",
+      },
+      {
+        game: "One Piece",
+        name: "Edward Newgate — OP02-004 Secret Rare",
+        value: "~$225 NM · Paramount War",
+        img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_EN.webp",
+        imgFallbacks: [
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_p1_EN.webp",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-004_p1.png",
+          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-004.png",
+        ],
+        alt: "Edward Newgate OP02-004 Secret Rare One Piece card",
+        badge: "onepiece-badge", fallback: "fallback-onepiece",
+      },
+    ],
+
+    /* ── Lorcana ── */
+    [
+      {
+        game: "Lorcana",
+        name: "Elsa — Spirit of Winter (Enchanted)",
+        value: "~$325 NM · The First Chapter",
+        img: "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
+        imgFallbacks: [
+          "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.png",
+          "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.webp",
+        ],
+        alt: "Elsa Spirit of Winter Enchanted Disney Lorcana card",
+        badge: "lorcana-badge", fallback: "fallback-lorcana",
+      },
+      {
+        game: "Lorcana",
+        name: "Simba — Protective Cub (Enchanted)",
+        value: "~$275 NM · The First Chapter",
+        img: "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub.png",
+        imgFallbacks: [
+          "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub_Enchanted.png",
+          "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub.webp",
+        ],
+        alt: "Simba Protective Cub Enchanted Disney Lorcana card",
+        badge: "lorcana-badge", fallback: "fallback-lorcana",
+      },
+      {
+        game: "Lorcana",
+        name: "Stitch — Carefree Surfer (Enchanted)",
+        value: "~$250 NM · Rise of the Floodborn",
+        img: "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer.png",
+        imgFallbacks: [
+          "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer_Enchanted.png",
+          "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer.webp",
+        ],
+        alt: "Stitch Carefree Surfer Enchanted Disney Lorcana card",
+        badge: "lorcana-badge", fallback: "fallback-lorcana",
+      },
+    ],
   ];
+
+  /* Pick one card at random from each pool */
+  const CARDS = POOLS.map((pool) => pool[Math.floor(Math.random() * pool.length)]);
 
   /* ── Build HTML ── */
   const popup = document.createElement("div");
