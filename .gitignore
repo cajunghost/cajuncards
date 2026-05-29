@@ -1,0 +1,32 @@
+# Environment & secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+credentials.json
+service-account*.json
+*token*.json
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# VS Code (workspace state, not extensions)
+.vscode/settings.json
+.vscode/launch.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artefacts (none today, but guard for the future)
+dist/
+build/
+node_modules/

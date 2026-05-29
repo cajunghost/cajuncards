@@ -1,0 +1,118 @@
+name: Security scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    name: Secret & sensitive-data scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history so we catch secrets in old commits too
+
+      # Reject any real GitHub PAT, generic bearer token, or private key accidentally committed
+      - name: Scan for committed secrets
+        run: |
+          FAIL=0
+
+          # Real GitHub PATs (classic: ghp_, fine-grained: github_pat_)
+          if git log --all -p -- '*.json' '*.js' '*.html' '*.env' '*.txt' \
+              | grep -E 'ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{82}'; then
+            echo "::error::Real GitHub PAT found in repository history!"
+            FAIL=1
+          fi
+
+          # Generic Bearer tokens / API keys that look real (40+ hex chars)
+          if git log --all -p -- '*.json' '*.js' '*.html' \
+              | grep -E '(Bearer|token|api[_-]?key)\s*[:=]\s*["'"'"'][A-Za-z0-9+/]{40,}["'"'"']' \
+              | grep -v 'passwordHash\|noreply@anthropic\|example\|placeholder\|YOUR_'; then
+            echo "::error::Possible secret token found in repository history!"
+            FAIL=1
+          fi
+
+          # Private key blocks
+          if git log --all -p -- '*.pem' '*.key' '*.json' \
+              | grep -E 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY'; then
+            echo "::error::Private key material found in repository history!"
+            FAIL=1
+          fi
+
+          [ $FAIL -eq 0 ] && echo "Secret scan passed — no secrets detected."
+          exit $FAIL
+
+  lint-js:
+    name: JavaScript syntax check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JS files parse cleanly
+        run: |
+          FAIL=0
+          for f in admin.js app.js store.js; do
+            if ! node --check "$f" 2>&1; then
+              echo "::error file=$f::Syntax error in $f"
+              FAIL=1
+            else
+              echo "$f — OK"
+            fi
+          done
+          exit $FAIL
+
+  content-security:
+    name: Content-security checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify CSP meta tags present in all public HTML
+        run: |
+          FAIL=0
+          for f in index.html store.html; do
+            if ! grep -q 'Content-Security-Policy' "$f"; then
+              echo "::error file=$f::Missing Content-Security-Policy meta tag in $f"
+              FAIL=1
+            fi
+          done
+          exit $FAIL
+
+      - name: Reject javascript: URIs in config
+        run: |
+          if grep -rni 'javascript:' config/; then
+            echo "::error::javascript: URI found in config — possible XSS injection"
+            exit 1
+          fi
+          echo "No javascript: URIs in config — OK"
+
+      - name: Check admin.html is noindex
+        run: |
+          if ! grep -q 'noindex' admin.html; then
+            echo "::warning file=admin.html::admin.html should have noindex meta tag"
+          fi
+          echo "noindex check passed"
+
+  file-size-guard:
+    name: Config file size guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # site.json ballooned to 156 KB when Codex accidentally wrote products into it.
+      # Hard limit: 50 KB. Products belong in config/products.json.
+      - name: Reject oversized site.json
+        run: |
+          SIZE=$(wc -c < config/site.json)
+          LIMIT=51200
+          echo "config/site.json is ${SIZE} bytes (limit: ${LIMIT})"
+          if [ "$SIZE" -gt "$LIMIT" ]; then
+            echo "::error file=config/site.json::config/site.json exceeds 50 KB (${SIZE} bytes). Products data belongs in config/products.json."
+            exit 1
+          fi

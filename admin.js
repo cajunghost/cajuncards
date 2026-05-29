@@ -549,11 +549,23 @@ function renderProductManager() {
   `;
 }
 
+function isSafeUrl(url) {
+  if (!url) return true;
+  return /^https:\/\//i.test(url);
+}
+
 function collectProductSquareUrls() {
   document.querySelectorAll("[data-product-idx]").forEach((input) => {
     const idx = parseInt(input.dataset.productIdx, 10);
     if (!isNaN(idx) && products[idx]) {
-      products[idx].squareUrl = input.value.trim();
+      const url = input.value.trim();
+      if (url && !isSafeUrl(url)) {
+        input.setCustomValidity("Square URLs must start with https://");
+        input.reportValidity();
+        return;
+      }
+      input.setCustomValidity("");
+      products[idx].squareUrl = url;
     }
   });
 }

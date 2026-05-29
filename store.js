@@ -158,8 +158,8 @@ function renderGrid() {
           ${metaParts ? `<div class="product-card-meta">${metaParts}</div>` : ""}
           <div class="product-card-footer">
             <span class="product-card-price">${escapeHtml(p.price || "")}</span>
-            ${p.squareUrl
-              ? `<a class="button primary product-buy-btn" href="${escapeHtml(p.squareUrl)}" target="_blank" rel="noopener">Buy</a>`
+            ${p.squareUrl && /^https:\/\//i.test(p.squareUrl)
+              ? `<a class="button primary product-buy-btn" href="${escapeHtml(p.squareUrl)}" target="_blank" rel="noopener noreferrer">Buy</a>`
               : `<span class="button ghost product-buy-btn disabled" aria-disabled="true">Inquire</span>`
             }
           </div>
