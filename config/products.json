@@ -1,4 +1,2021 @@
 {
-  "products": [],
-  "_publishedAt": ""
+  "products": [
+    {
+      "id": "pokemon-tcg-all-products-360-fusion-strike",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Fusion Strike",
+      "name": "360",
+      "price": "$107.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "360",
+      "price": "$107.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-astral-radiance",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Astral Radiance",
+      "name": "360",
+      "price": "$107.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "360",
+      "price": "$107.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "360",
+      "price": "$107.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "360",
+      "price": "$107.64",
+      "notes": "Final SWSH set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-paldean-fates",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldean Fates",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-scarlet-violet-151",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet 151",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-860-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "860",
+      "price": "$215.64",
+      "notes": "Paired dual-set with White Flare; 172 cards"
+    },
+    {
+      "id": "pokemon-tcg-all-products-860-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "860",
+      "price": "$215.64",
+      "notes": "Paired dual-set with Black Bolt; 173 cards"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-360-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "360",
+      "price": "$143.64"
+    },
+    {
+      "id": "pokemon-tcg-all-products-1800-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "1800",
+      "price": "$161.64",
+      "notes": "Includes Bulbasaur Illustration Rare box topper"
+    },
+    {
+      "id": "pokemon-tcg-all-products-1300-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "1300",
+      "price": "$143.64",
+      "notes": "130 cards; Nov 14 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — special high-class set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-1200-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "1200",
+      "price": "$143.64",
+      "notes": "120+ cards; Mega Zygarde ex; Mar 27 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-1220-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "1220",
+      "price": "$143.64",
+      "notes": "122 cards; Mega Greninja ex; May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-1200-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "1200",
+      "price": "$143.64",
+      "notes": "Mega Darkrai ex + Mega Zeraora ex; Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-fusion-strike",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Fusion Strike",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-astral-radiance",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Astral Radiance",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "11 packs + exclusive stamped promo; PC exclusive"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-scarlet-violet-151",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet 151",
+      "name": "65",
+      "price": "$49.99",
+      "notes": "Special set — no booster box; ETB is primary pack product"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-paldean-fates",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldean Fates",
+      "name": "65",
+      "price": "$49.99",
+      "notes": "Special set — no booster box"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "65",
+      "price": "$69.99",
+      "notes": "PC exclusive; special set premium"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "65",
+      "price": "$49.99",
+      "notes": "9 Black Bolt packs + Zekrom promo; Jul 18 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "65",
+      "price": "$49.99",
+      "notes": "9 White Flare packs + Reshiram promo; Jul 18 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "65",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive; special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive; Tyrunt stamped promo; Mar 27 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive; Fennekin stamped promo; May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-65-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "65",
+      "price": "$59.99",
+      "notes": "PC exclusive; Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-fusion-strike",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Fusion Strike",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-astral-radiance",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Astral Radiance",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-scarlet-violet-151",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet 151",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Special set; available via specialty products"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-paldean-fates",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldean Fates",
+      "name": "60",
+      "price": "$44.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "60",
+      "price": "$49.99",
+      "notes": "Special set; premium pricing"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Available Aug 22 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Available Aug 22 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "60",
+      "price": "$44.99",
+      "notes": "Mew & Mewtwo theme"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "60",
+      "price": "$26.94"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "60",
+      "price": "$26.94"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Available Apr 24 2026; special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Mar 27 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "60",
+      "price": "$29.99",
+      "notes": "May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "60",
+      "price": "$26.94",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-fusion-strike",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Fusion Strike",
+      "name": "30",
+      "price": "$10.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "30",
+      "price": "$19.99",
+      "notes": "3 packs + V promo"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-astral-radiance",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Astral Radiance",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "30",
+      "price": "$10.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "30",
+      "price": "$15.99",
+      "notes": "Sprigatito/Fuecoco/Quaxly promos"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "30",
+      "price": "$10.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-scarlet-violet-151",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet 151",
+      "name": "30",
+      "price": "$11.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-paldean-fates",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldean Fates",
+      "name": "30",
+      "price": "$11.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "30",
+      "price": "$10.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "30",
+      "price": "$10.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "30",
+      "price": "$21.99",
+      "notes": "Premium pricing for special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "30",
+      "price": "$23.99",
+      "notes": "3 packs + foil promo + sticker sheet"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "30",
+      "price": "$23.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "30",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "30",
+      "price": "$21.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "30",
+      "price": "$21.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "30",
+      "price": "$21.99",
+      "notes": "Mar 27 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "30",
+      "price": "$21.99",
+      "notes": "May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "30",
+      "price": "$21.99",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "10",
+      "price": "$4.49",
+      "notes": "Premium special set pricing"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "10",
+      "price": "$17.99",
+      "notes": "Mini tin; 1 pack + promo coin"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "10",
+      "price": "$17.99",
+      "notes": "Mini tin; 1 pack + promo coin"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "10",
+      "price": "$3.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "10",
+      "price": "$4.49"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "10",
+      "price": "$4.49"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "10",
+      "price": "$4.49",
+      "notes": "Mar 27 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "10",
+      "price": "$4.49",
+      "notes": "May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-10-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "10",
+      "price": "$4.49",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-fusion-strike",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Fusion Strike",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-astral-radiance",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Astral Radiance",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — no prerelease for dual special sets"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "0",
+      "price": "$0",
+      "notes": "N/A — Not produced for this set — no prerelease for dual special sets"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "145",
+      "price": "$19.99",
+      "notes": "Prereleases Sep 13 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "145",
+      "price": "$19.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "145",
+      "price": "$19.99",
+      "notes": "Prereleases Mar 14-26 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "145",
+      "price": "$19.99",
+      "notes": "Prereleases May 9 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-145-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "145",
+      "price": "$19.99",
+      "notes": "Prereleases Jul 4 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "40",
+      "price": "$29.99",
+      "notes": "4 packs + promo + coin"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "40",
+      "price": "$29.99",
+      "notes": "High demand"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-paldean-fates",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldean Fates",
+      "name": "50",
+      "price": "$39.99",
+      "notes": "Special set premium"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "50",
+      "price": "$39.99",
+      "notes": "Premium special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-black-bolt",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Black Bolt",
+      "name": "50",
+      "price": "$33.99",
+      "notes": "5 packs + poster + promo"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-white-flare",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "White Flare",
+      "name": "50",
+      "price": "$49.99",
+      "notes": "9-pocket binder + 5 packs; Jul 18 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-mega-evolution-phantasmal-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Phantasmal Flames",
+      "name": "40",
+      "price": "$29.99",
+      "notes": "High demand"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "50",
+      "price": "$39.99",
+      "notes": "Special set; higher MSRP"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "40",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "40",
+      "price": "$29.99",
+      "notes": "May 22 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-40-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "40",
+      "price": "$29.99",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-brilliant-stars",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Brilliant Stars",
+      "name": "80",
+      "price": "$59.99",
+      "notes": "8 packs + oversized promo"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-lost-origin",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Lost Origin",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-silver-tempest",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Silver Tempest",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-paradox-rift",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paradox Rift",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-182-scarlet-violet-151",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet 151",
+      "name": "182",
+      "price": "$159.99",
+      "notes": "16 packs + Mew ex + Mewtwo ex promos; flagship collector product"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-twilight-masquerade",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Twilight Masquerade",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-90-prismatic-evolutions",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Prismatic Evolutions",
+      "name": "90",
+      "price": "$69.99",
+      "notes": "Flagship collector product for special set"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-destined-rivals",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Destined Rivals",
+      "name": "80",
+      "price": "$59.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "80",
+      "price": "$59.99",
+      "notes": "8 packs + foil poster + Mega Lucario ex promo"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-mega-evolution-perfect-order",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Perfect Order",
+      "name": "80",
+      "price": "$59.99",
+      "notes": "May 2026 release; includes jumbo card + tech sticker"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-mega-evolution-chaos-rising",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Chaos Rising",
+      "name": "80",
+      "price": "$59.99",
+      "notes": "May 22 2026; includes Fezandipiti ex & Secret Box"
+    },
+    {
+      "id": "pokemon-tcg-all-products-80-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "80",
+      "price": "$59.99",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "50",
+      "price": "$39.99",
+      "notes": "5 packs + full-art promo"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-obsidian-flames",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Obsidian Flames",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-shrouded-fable",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Shrouded Fable",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-stellar-crown",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Stellar Crown",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-30-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "30",
+      "price": "$23.99",
+      "notes": "3 packs + foil promo + sticker; Jan 30 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-20-mega-evolution-ascended-heroes",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Ascended Heroes",
+      "name": "20",
+      "price": "$19.99",
+      "notes": "Case = 24 units MSRP $239.76"
+    },
+    {
+      "id": "pokemon-tcg-all-products-200-scarlet-violet-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Era",
+      "name": "200",
+      "price": "$29.99",
+      "notes": "Updated trainer lineup"
+    },
+    {
+      "id": "pokemon-tcg-all-products-200-sword-shield-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Sword & Shield Era",
+      "name": "200",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-scarlet-violet-base",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Base",
+      "name": "120",
+      "price": "$29.99",
+      "notes": "Two 60-card decks; no packs"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-paldea-evolved",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Paldea Evolved",
+      "name": "120",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-temporal-forces",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Temporal Forces",
+      "name": "120",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-surging-sparks",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Surging Sparks",
+      "name": "120",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-journey-together",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Journey Together",
+      "name": "120",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-mega-evolution",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution",
+      "name": "120",
+      "price": "$29.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-mega-evolution-pitch-black-night",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution — Pitch Black Night",
+      "name": "120",
+      "price": "$29.99",
+      "notes": "Jul 17 2026"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-scarlet-violet-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Era",
+      "name": "60",
+      "price": "$29.99",
+      "notes": "60-card competitive deck; no packs"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-sword-shield-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Sword & Shield Era",
+      "name": "60",
+      "price": "$24.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-60-mega-evolution-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution Era",
+      "name": "60",
+      "price": "$29.99",
+      "notes": "Released Nov 7 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-120-scarlet-violet-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Scarlet & Violet Era",
+      "name": "120",
+      "price": "$59.99",
+      "notes": "Released Aug 22 2025"
+    },
+    {
+      "id": "pokemon-tcg-all-products-50-crown-zenith",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Crown Zenith",
+      "name": "50",
+      "price": "$39.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-100-sword-shield-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Sword & Shield Era",
+      "name": "100",
+      "price": "$49.99"
+    },
+    {
+      "id": "pokemon-tcg-all-products-0-mega-evolution-era",
+      "squareUrl": "",
+      "imageUrl": "",
+      "category": "Pokemon TCG All Products",
+      "setName": "Mega Evolution Era",
+      "name": "0",
+      "price": "$11.99",
+      "notes": "3 packs + anniversary-stamped Pikachu promo; celebration release"
+    }
+  ],
+  "_publishedAt": "2026-05-29T15:14:51.032Z"
 }
