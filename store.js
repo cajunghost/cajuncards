@@ -95,7 +95,7 @@ function applyFilters() {
 
   filteredProducts = products.filter((p) => {
     const matchSearch = !search ||
-      p.name.toLowerCase().includes(search) ||
+      (p.name || "").toLowerCase().includes(search) ||
       (p.setName   || "").toLowerCase().includes(search) ||
       (p.category  || "").toLowerCase().includes(search) ||
       (p.condition || "").toLowerCase().includes(search);
