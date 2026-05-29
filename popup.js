@@ -7,7 +7,8 @@
       game: "Pokémon",
       name: "Charizard — Base Set 1st Edition",
       value: "~$420,000 PSA 10",
-      img:  "https://images.pokemontcg.io/base1/4_hires.png",
+      /* Pokemon TCG API: open CORS, no hotlink protection */
+      img: "https://images.pokemontcg.io/base1/4_hires.png",
       imgFallbacks: [
         "https://images.pokemontcg.io/base1/4.png",
         "https://images.pokemontcg.io/base1/2_hires.png",
@@ -21,11 +22,12 @@
       game: "One Piece",
       name: "Shanks — OP01-120 Secret Rare",
       value: "~$1,200 Raw",
-      img:  "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
+      /* Limitless TCG CDN: permissive CORS, no hotlink protection */
+      img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.webp",
       imgFallbacks: [
-        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120.png",
-        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-119_p1.png",
-        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-119.png",
+        "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_p1_EN.webp",
+        "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01-120_EN.webp",
+        "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
       ],
       alt:  "Shanks OP01-120 Secret Rare One Piece card",
       badge: "onepiece-badge",
@@ -35,11 +37,12 @@
       game: "Lorcana",
       name: "Elsa — Spirit of Winter (Enchanted)",
       value: "~$500 Raw",
-      img:  "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
+      /* Lorcana community API: open CORS */
+      img: "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
       imgFallbacks: [
+        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.png",
         "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.webp",
-        "https://lorcana-api.com/images/EN/Maleficent_-_Monstrous_Dragon.png",
-        "https://lorcana-api.com/images/EN/Maleficent_-_Monstrous_Dragon.webp",
+        "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.webp",
       ],
       alt:  "Elsa Spirit of Winter Enchanted Disney Lorcana card",
       badge: "lorcana-badge",
