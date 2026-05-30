@@ -52,15 +52,16 @@
     [
       {
         game: "One Piece",
-        name: "Monkey D. Luffy — OP01-120 Secret Rare",
+        name: "Shanks — OP01-120 Secret Rare",
         value: "~$275 NM · Romance Dawn",
         img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.webp",
         imgFallbacks: [
-          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_p1_EN.webp",
-          "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120_p1.png",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.webp",
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.jpg",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP01/OP01_120_EN.jpg",
           "https://en.onepiece-cardgame.com/images/cardlist/card/OP01-120.png",
         ],
-        alt: "Monkey D. Luffy OP01-120 Secret Rare One Piece card",
+        alt: "Shanks OP01-120 Secret Rare One Piece card",
         badge: "onepiece-badge", fallback: "fallback-onepiece",
       },
       {
@@ -69,8 +70,9 @@
         value: "~$300 NM · Paramount War",
         img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_EN.webp",
         imgFallbacks: [
-          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_p1_EN.webp",
-          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013_p1.png",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_EN.webp",
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_EN.jpg",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP02/OP02_013_EN.jpg",
           "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013.png",
         ],
         alt: "Portgas D. Ace OP02-013 Secret Rare One Piece card",
@@ -82,8 +84,9 @@
         value: "~$225 NM · Paramount War",
         img: "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_EN.webp",
         imgFallbacks: [
-          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_p1_EN.webp",
-          "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-004_p1.png",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_EN.webp",
+          "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_EN.jpg",
+          "https://limitlesstcg.nyc3.digitaloceanspaces.com/one-piece/en/OP02/OP02_004_EN.jpg",
           "https://en.onepiece-cardgame.com/images/cardlist/card/OP02-004.png",
         ],
         alt: "Edward Newgate OP02-004 Secret Rare One Piece card",
@@ -100,7 +103,8 @@
         img: "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
         imgFallbacks: [
           "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter_Enchanted.png",
-          "https://lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.webp",
+          "https://api.lorcana-api.com/images/EN/Elsa_-_Spirit_of_Winter.png",
+          "https://raw.githubusercontent.com/Lorcana-API/lorcana-api/main/images/EN/Elsa_-_Spirit_of_Winter.png",
         ],
         alt: "Elsa Spirit of Winter Enchanted Disney Lorcana card",
         badge: "lorcana-badge", fallback: "fallback-lorcana",
@@ -112,7 +116,8 @@
         img: "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub.png",
         imgFallbacks: [
           "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub_Enchanted.png",
-          "https://lorcana-api.com/images/EN/Simba_-_Protective_Cub.webp",
+          "https://api.lorcana-api.com/images/EN/Simba_-_Protective_Cub.png",
+          "https://raw.githubusercontent.com/Lorcana-API/lorcana-api/main/images/EN/Simba_-_Protective_Cub.png",
         ],
         alt: "Simba Protective Cub Enchanted Disney Lorcana card",
         badge: "lorcana-badge", fallback: "fallback-lorcana",
@@ -124,7 +129,8 @@
         img: "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer.png",
         imgFallbacks: [
           "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer_Enchanted.png",
-          "https://lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer.webp",
+          "https://api.lorcana-api.com/images/EN/Stitch_-_Carefree_Surfer.png",
+          "https://raw.githubusercontent.com/Lorcana-API/lorcana-api/main/images/EN/Stitch_-_Carefree_Surfer.png",
         ],
         alt: "Stitch Carefree Surfer Enchanted Disney Lorcana card",
         badge: "lorcana-badge", fallback: "fallback-lorcana",
